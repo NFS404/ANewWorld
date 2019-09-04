@@ -1,0 +1,423 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug_RL|Win32">
+      <Configuration>Debug_RL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_RL|x64">
+      <Configuration>Debug_RL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{68388F64-B72F-4F62-B99B-5B1289E5F243}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>ANewWorld</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_RL|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141_xp</PlatformToolset>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_RL|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_RL|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_RL|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <TargetExt>.asi</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>
+    </LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+    <TargetExt>.WorldMod</TargetExt>
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_RL|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>true</GenerateManifest>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_RL|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ROCKPORTED_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;ROCKPORTED_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)poco\Net\include;$(SolutionDir)poco\Foundation\include;$(DXSDK_DIR)Include;$(SolutionDir)inc;$(ProjectDir)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <OmitFramePointers>false</OmitFramePointers>
+      <StringPooling>true</StringPooling>
+      <EnableParallelCodeGeneration>
+      </EnableParallelCodeGeneration>
+      <CallingConvention>Cdecl</CallingConvention>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+      <ConformanceMode>false</ConformanceMode>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <ExceptionHandling>Async</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <RandomizedBaseAddress>
+      </RandomizedBaseAddress>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86;$(SolutionDir)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;dinput8.lib;Shlwapi.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Version>1.0</Version>
+      <PreventDllBinding>false</PreventDllBinding>
+      <AssemblyDebug>false</AssemblyDebug>
+      <SetChecksum>true</SetChecksum>
+      <BaseAddress>
+      </BaseAddress>
+      <FixedBaseAddress>
+      </FixedBaseAddress>
+      <MergeSections>
+      </MergeSections>
+      <ImageHasSafeExceptionHandlers>true</ImageHasSafeExceptionHandlers>
+    </Link>
+    <PostBuildEvent>
+      <Command>call "$(SolutionDir)$(Configuration)\copy.bat" "$(SolutionDir)$(Configuration)\ANewWorld.WorldMod"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_RL|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include;$(SolutionDir)inc;$(ProjectDir)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <ControlFlowGuard>false</ControlFlowGuard>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <CreateHotpatchableImage>
+      </CreateHotpatchableImage>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dinput8.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateMapFile>true</GenerateMapFile>
+      <AssemblyDebug>true</AssemblyDebug>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)Debug_RL\RockportEd.asi" "D:\Oyunlar\NFS Most Wanted\scripts\RockportEd.asi" /y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;ROCKPORTED_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_RL|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;ROCKPORTED_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Extensions\DInput8\DI8Extension.h" />
+    <ClInclude Include="Extensions\Extensions.h" />
+    <ClInclude Include="Extensions\InGame Menu\InGameMenu.h" />
+    <ClInclude Include="Extensions\InGame Menu\Items\CameraEditor.hpp" />
+    <ClInclude Include="Extensions\InGame Menu\Items\Debug.hpp" />
+    <ClInclude Include="Extensions\InGame Menu\Items\NewSafehouses.hpp" />
+    <ClInclude Include="Extensions\InGame Menu\Items\_BaseInGameMenuItem.hpp" />
+    <ClInclude Include="Extensions\InGame Menu\Items\_LoadInGameMenuItems.hpp" />
+    <ClInclude Include="Extensions\WndProc\DI8Extension_WndProcBlockKeyboard.hpp" />
+    <ClInclude Include="Extensions\WndProc\DI8Extension_WndProcBlockMouse.hpp" />
+    <ClInclude Include="Extensions\WndProc\WndProcExtensions.hpp" />
+    <ClInclude Include="Helpers\Game Internals\Config\Config.h" />
+    <ClInclude Include="Helpers\Game Internals\Config\Controls.h" />
+    <ClInclude Include="Helpers\Game Internals\Config\Gameplay.h" />
+    <ClInclude Include="Helpers\Game Internals\Config\Player.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Data.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\AIVehicle.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\Attrib.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\Behavior.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\bNode.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\CollisionGeometry.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\Dynamics.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\EventSequencer.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\FECustomizationRecord.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\HCAUSE__.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\HSIMABLE__.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\HSIMPROFILE__.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\HSIMSERVICE__.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\HSIMTASK__.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\IAttachable.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\IAttributeable.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\IBody.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\ICollisionBody.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\IDynamicsEntity.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\IExplodeable.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\IModel.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\IPlayer.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\IRigidBody.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\ISimable.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\IVehicle.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\IVehicleAI.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\Math.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\PhysicsObject.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\PVehicle.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\RigidBody.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\Server.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\Sim.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\UCrc32.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\UMath.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\UTL.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\VehicleParams.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\WCollisionMgr.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\WWorldPos.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\_enums.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\_generic.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\_memory.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\GameFunctions.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\GameTypes.h" />
+    <ClInclude Include="Helpers\Game Internals\Data\Variables.h" />
+    <ClInclude Include="Helpers\Game Internals\GameInternals.h" />
+    <ClInclude Include="Helpers\Game Internals\Gameplay\Camera.h" />
+    <ClInclude Include="Helpers\Game Internals\Gameplay\Gameplay.h" />
+    <ClInclude Include="Helpers\Game Internals\Gameplay\Player.h" />
+    <ClInclude Include="Helpers\Game Internals\Gameplay\Variables.h" />
+    <ClInclude Include="Helpers\Game Internals\Gameplay\World.h" />
+    <ClInclude Include="Helpers\imgui\dx9\imgui_impl_dx9.h" />
+    <ClInclude Include="Helpers\imgui\dx9\imgui_impl_win32.h" />
+    <ClInclude Include="Helpers\imgui\imconfig.h" />
+    <ClInclude Include="Helpers\imgui\imgui.h" />
+    <ClInclude Include="Helpers\imgui\imgui_internal.h" />
+    <ClInclude Include="Helpers\imgui\imgui_user.h" />
+    <ClInclude Include="Helpers\imgui\imstb_rectpack.h" />
+    <ClInclude Include="Helpers\imgui\imstb_textedit.h" />
+    <ClInclude Include="Helpers\imgui\imstb_truetype.h" />
+    <ClInclude Include="Helpers\imgui\stb_rect_pack.h" />
+    <ClInclude Include="Helpers\imgui\stb_textedit.h" />
+    <ClInclude Include="Helpers\imgui\stb_truetype.h" />
+    <ClInclude Include="Helpers\LocalMirrorHook\D3D9Types.h" />
+    <ClInclude Include="Helpers\LocalMirrorHook\DI8Types.h" />
+    <ClInclude Include="Helpers\LocalMirrorHook\LocalMirrorHook.h" />
+    <ClInclude Include="Helpers\LocalMirrorHook\VTableHook.hpp" />
+    <ClInclude Include="Helpers\Memory\Memory.h" />
+    <ClInclude Include="Helpers\ServerTalk\IServerTalk.hpp" />
+    <ClInclude Include="Helpers\ServerTalk\Object\IServerTalkObject.hpp" />
+    <ClInclude Include="Helpers\ServerTalk\Object\ListOfHashes.hpp" />
+    <ClInclude Include="Helpers\Settings\Object\CameraInfoPresetType.hpp" />
+    <ClInclude Include="Helpers\Settings\Settings.h" />
+    <ClInclude Include="Helpers\Settings\Type\SettingsType.hpp" />
+    <ClInclude Include="Helpers\WndProc\WndProcHook.h" />
+    <ClInclude Include="LICENSE" />
+    <ClInclude Include="Main\Anticheat\EditWindowProperties.hpp" />
+    <ClInclude Include="Main\Modding\Exposed\GameDataHooks.hpp" />
+    <ClInclude Include="Main\Modding\Hooks\CreateFile.hpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClInclude Include="Main\Modding\Server\ServerJobs.hpp" />
+    <ClInclude Include="Main\Modding\Init.hpp" />
+    <ClInclude Include="Main\Modding\Hooks\_InstallHooks.hpp" />
+    <ClInclude Include="Main\Modding\Server\Types\DataType.hpp" />
+    <ClInclude Include="Helpers\ServerTalk\ExternalServerTalk.hpp" />
+    <ClInclude Include="Main\Modding\Server\Types\FeaturesType.hpp" />
+    <ClInclude Include="stdafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Extensions\DInput8\DI8Extension.cpp" />
+    <ClCompile Include="Extensions\InGame Menu\InGameMenu.cpp" />
+    <ClCompile Include="Helpers\imgui\dx9\imgui_impl_dx9.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug_RL|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Helpers\imgui\dx9\imgui_impl_win32.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Helpers\imgui\imgui.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug_RL|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Helpers\imgui\imgui_demo.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug_RL|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Helpers\imgui\imgui_draw.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug_RL|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Helpers\imgui\imgui_user.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug_RL|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Helpers\imgui\imgui_widgets.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Helpers\LocalMirrorHook\LocalMirrorHook.cpp" />
+    <ClCompile Include="Helpers\Memory\Memory.cpp" />
+    <ClInclude Include="Helpers\ServerTalk\GameServerTalk.hpp" />
+    <ClCompile Include="Helpers\Settings\Settings.cpp" />
+    <ClCompile Include="Helpers\WndProc\WndProcHook.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ANewWorld.licenseheader" />
+    <None Include="cpp.hint" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

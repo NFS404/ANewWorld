@@ -1,0 +1,450 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Extensions">
+      <UniqueIdentifier>{0147719d-7da8-4aff-82b7-add2800f5797}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extensions\DInput8">
+      <UniqueIdentifier>{c031cebd-8256-46fe-b426-62b332d5cb61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extensions\InGame Menu">
+      <UniqueIdentifier>{050dde62-5fe7-4eaa-914c-5ed5a84b3124}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extensions\InGame Menu\Items">
+      <UniqueIdentifier>{4faf821d-9d64-42ed-b055-f0bcdbc50589}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extensions\WndProc">
+      <UniqueIdentifier>{5b98c49e-d54a-40e5-a345-505af814b490}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\imgui">
+      <UniqueIdentifier>{d5ed53d0-1a5a-4b42-97d1-8a21cc3d8455}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers">
+      <UniqueIdentifier>{92bf4626-e22b-4b40-9a7f-8dd9d263bf8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\imgui\dx9">
+      <UniqueIdentifier>{55d3f1d1-e81a-487e-94b9-60448d3cb6f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Memory">
+      <UniqueIdentifier>{c1ce0b88-1a0d-4277-99af-3a72ec6331c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Settings">
+      <UniqueIdentifier>{086372d2-4786-4842-99cf-1f9a10e11922}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Settings\Object">
+      <UniqueIdentifier>{9c0044ae-d56e-41ea-95fe-58ed74e648a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Settings\Type">
+      <UniqueIdentifier>{cb86421e-f05b-48c3-a421-d2f0e3bc6549}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\WndProc">
+      <UniqueIdentifier>{2307bb01-39cf-4a12-8afa-698e40e8a0d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Game Internals">
+      <UniqueIdentifier>{72d12cb6-3454-426a-8ca5-38f9cd5d8301}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Game Internals\Data">
+      <UniqueIdentifier>{9251efd7-9528-4dc6-ace2-9d72afa8df1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Game Internals\Gameplay">
+      <UniqueIdentifier>{1412798f-871d-4d4f-8120-d13791155c8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Game Internals\Config">
+      <UniqueIdentifier>{e5803ce8-b788-4e57-9462-1a6ac6b65927}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\LocalMirrorHook">
+      <UniqueIdentifier>{d5aa5346-64ea-4445-9a8c-0230186fb7d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Game Internals\Data\Game Types">
+      <UniqueIdentifier>{2bcdcd14-069a-4f99-86b5-0279e085b0c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{bfc7f005-6c13-4ae7-b7cf-9efdb4ed1d02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\Modding">
+      <UniqueIdentifier>{7db3ea7a-a4e9-413b-9176-49fde24d29f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\Anticheat">
+      <UniqueIdentifier>{59a6363b-3947-4029-a93c-4f20438c01c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\Modding\Hooks">
+      <UniqueIdentifier>{1a63c6d7-23c3-470f-9279-1b9dad22aa77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\Modding\Server">
+      <UniqueIdentifier>{94c370c0-4846-42c4-a27c-bcd79251d335}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\Modding\Server\Types">
+      <UniqueIdentifier>{1f6cd3b5-52af-4082-8cbc-b47726de3051}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\Modding\Exposed">
+      <UniqueIdentifier>{eaaf3c5f-3fb5-41a9-b53f-586f24ffd21a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\ServerTalk">
+      <UniqueIdentifier>{97940f84-154c-4046-a61c-de6cd5f567af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\ServerTalk\Object">
+      <UniqueIdentifier>{58cba012-88cb-45cb-bd03-d357986e4ab3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="default">
+      <UniqueIdentifier>{832699c5-1f3e-4e90-a4c4-29f66c8ff63d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Extensions\Extensions.h">
+      <Filter>Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="Extensions\DInput8\DI8Extension.h">
+      <Filter>Extensions\DInput8</Filter>
+    </ClInclude>
+    <ClInclude Include="Extensions\InGame Menu\InGameMenu.h">
+      <Filter>Extensions\InGame Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Extensions\InGame Menu\Items\CameraEditor.hpp">
+      <Filter>Extensions\InGame Menu\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Extensions\InGame Menu\Items\Debug.hpp">
+      <Filter>Extensions\InGame Menu\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Extensions\InGame Menu\Items\NewSafehouses.hpp">
+      <Filter>Extensions\InGame Menu\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Extensions\InGame Menu\Items\_BaseInGameMenuItem.hpp">
+      <Filter>Extensions\InGame Menu\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Extensions\InGame Menu\Items\_LoadInGameMenuItems.hpp">
+      <Filter>Extensions\InGame Menu\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Extensions\WndProc\DI8Extension_WndProcBlockMouse.hpp">
+      <Filter>Extensions\WndProc</Filter>
+    </ClInclude>
+    <ClInclude Include="Extensions\WndProc\WndProcExtensions.hpp">
+      <Filter>Extensions\WndProc</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\imgui\imconfig.h">
+      <Filter>Helpers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\imgui\imgui.h">
+      <Filter>Helpers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\imgui\imgui_internal.h">
+      <Filter>Helpers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\imgui\imgui_user.h">
+      <Filter>Helpers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\imgui\imstb_rectpack.h">
+      <Filter>Helpers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\imgui\imstb_textedit.h">
+      <Filter>Helpers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\imgui\imstb_truetype.h">
+      <Filter>Helpers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\imgui\stb_rect_pack.h">
+      <Filter>Helpers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\imgui\stb_textedit.h">
+      <Filter>Helpers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\imgui\stb_truetype.h">
+      <Filter>Helpers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\imgui\dx9\imgui_impl_dx9.h">
+      <Filter>Helpers\imgui\dx9</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\imgui\dx9\imgui_impl_win32.h">
+      <Filter>Helpers\imgui\dx9</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Memory\Memory.h">
+      <Filter>Helpers\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Settings\Settings.h">
+      <Filter>Helpers\Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Settings\Object\CameraInfoPresetType.hpp">
+      <Filter>Helpers\Settings\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Settings\Type\SettingsType.hpp">
+      <Filter>Helpers\Settings\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\WndProc\WndProcHook.h">
+      <Filter>Helpers\WndProc</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\GameInternals.h">
+      <Filter>Helpers\Game Internals</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Data.h">
+      <Filter>Helpers\Game Internals\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\GameFunctions.h">
+      <Filter>Helpers\Game Internals\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\GameTypes.h">
+      <Filter>Helpers\Game Internals\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Variables.h">
+      <Filter>Helpers\Game Internals\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Gameplay\Camera.h">
+      <Filter>Helpers\Game Internals\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Gameplay\Gameplay.h">
+      <Filter>Helpers\Game Internals\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Gameplay\Player.h">
+      <Filter>Helpers\Game Internals\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Gameplay\Variables.h">
+      <Filter>Helpers\Game Internals\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Gameplay\World.h">
+      <Filter>Helpers\Game Internals\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Config\Config.h">
+      <Filter>Helpers\Game Internals\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Config\Controls.h">
+      <Filter>Helpers\Game Internals\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Config\Gameplay.h">
+      <Filter>Helpers\Game Internals\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Config\Player.h">
+      <Filter>Helpers\Game Internals\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\LocalMirrorHook\D3D9Types.h">
+      <Filter>Helpers\LocalMirrorHook</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\LocalMirrorHook\DI8Types.h">
+      <Filter>Helpers\LocalMirrorHook</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\LocalMirrorHook\LocalMirrorHook.h">
+      <Filter>Helpers\LocalMirrorHook</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\LocalMirrorHook\VTableHook.hpp">
+      <Filter>Helpers\LocalMirrorHook</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\ServerTalk\Object\IServerTalkObject.hpp">
+      <Filter>Helpers\ServerTalk\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\ServerTalk\Object\ListOfHashes.hpp">
+      <Filter>Helpers\ServerTalk\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\_generic.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\_memory.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\EventSequencer.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\FECustomizationRecord.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\IAttachable.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\IAttributeable.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\IBody.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\IExplodeable.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\ISimable.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\IVehicle.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\PhysicsObject.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\PVehicle.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\RigidBody.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\Server.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\Sim.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\VehicleParams.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\Attrib.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\AIVehicle.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\_enums.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\UTL.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\WWorldPos.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\IModel.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\HSIMABLE__.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\IRigidBody.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\HCAUSE__.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\IPlayer.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\HSIMSERVICE__.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\HSIMTASK__.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\UCrc32.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\UMath.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\IVehicleAI.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\Behavior.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\HSIMPROFILE__.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\WCollisionMgr.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\IDynamicsEntity.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\ICollisionBody.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\Dynamics.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\CollisionGeometry.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\bNode.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Game Internals\Data\Game Types\Math.h">
+      <Filter>Helpers\Game Internals\Data\Game Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Extensions\WndProc\DI8Extension_WndProcBlockKeyboard.hpp">
+      <Filter>Extensions\WndProc</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\Anticheat\EditWindowProperties.hpp">
+      <Filter>Main\Anticheat</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\Modding\Init.hpp">
+      <Filter>Main\Modding</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\Modding\Hooks\_InstallHooks.hpp">
+      <Filter>Main\Modding\Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\Modding\Server\ServerJobs.hpp">
+      <Filter>Main\Modding\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\Modding\Server\Types\DataType.hpp">
+      <Filter>Main\Modding\Server\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\Modding\Exposed\GameDataHooks.hpp">
+      <Filter>Main\Modding\Exposed</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\ServerTalk\GameServerTalk.hpp">
+      <Filter>Helpers\ServerTalk</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\ServerTalk\IServerTalk.hpp">
+      <Filter>Helpers\ServerTalk</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\ServerTalk\ExternalServerTalk.hpp">
+      <Filter>Helpers\ServerTalk</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\Modding\Server\Types\FeaturesType.hpp">
+      <Filter>Main\Modding\Server\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>default</Filter>
+    </ClInclude>
+    <ClInclude Include="LICENSE">
+      <Filter>default</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\Modding\Hooks\CreateFile.hpp">
+      <Filter>Main\Modding\Hooks</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Extensions\DInput8\DI8Extension.cpp">
+      <Filter>Extensions\DInput8</Filter>
+    </ClCompile>
+    <ClCompile Include="Extensions\InGame Menu\InGameMenu.cpp">
+      <Filter>Extensions\InGame Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers\imgui\imgui.cpp">
+      <Filter>Helpers\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers\imgui\imgui_demo.cpp">
+      <Filter>Helpers\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers\imgui\imgui_draw.cpp">
+      <Filter>Helpers\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers\imgui\imgui_user.cpp">
+      <Filter>Helpers\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers\imgui\imgui_widgets.cpp">
+      <Filter>Helpers\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers\imgui\dx9\imgui_impl_dx9.cpp">
+      <Filter>Helpers\imgui\dx9</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers\imgui\dx9\imgui_impl_win32.cpp">
+      <Filter>Helpers\imgui\dx9</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers\Memory\Memory.cpp">
+      <Filter>Helpers\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers\Settings\Settings.cpp">
+      <Filter>Helpers\Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers\WndProc\WndProcHook.cpp">
+      <Filter>Helpers\WndProc</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers\LocalMirrorHook\LocalMirrorHook.cpp">
+      <Filter>Helpers\LocalMirrorHook</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>default</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ANewWorld.licenseheader">
+      <Filter>default</Filter>
+    </None>
+    <None Include="cpp.hint">
+      <Filter>default</Filter>
+    </None>
+  </ItemGroup>
+</Project>
