@@ -2,7 +2,7 @@
    MIT License
 
    Copyright (c) 2019 Berkay Yigit <berkay2578@gmail.com>
-   Nickname(s) used by the copyright holder: 'berkay2578', 'berkayylmao'.
+       Copyright holder detail: Nickname(s) used by the copyright holder: 'berkay2578', 'berkayylmao'.
 
    Permission is hereby granted, free of charge, to any person obtaining a copy
    of this software and associated documentation files (the "Software"), to deal
@@ -270,10 +270,10 @@ namespace Extensions {
       void Init() {
          isFirstTimeUser = Settings::settingsType.isFirstTimeUser;
 
-         LocalMirrorHook::D3D9::AddExtension(LocalMirrorHook::D3D9::D3D9Extension::BeginScene, &beginScene);
-         LocalMirrorHook::D3D9::AddExtension(LocalMirrorHook::D3D9::D3D9Extension::EndScene, &endScene);
-         LocalMirrorHook::D3D9::AddExtension(LocalMirrorHook::D3D9::D3D9Extension::BeforeReset, &beforeReset);
-         LocalMirrorHook::D3D9::AddExtension(LocalMirrorHook::D3D9::D3D9Extension::AfterReset, &afterReset);
+         LocalMirrorHook::D3D9::AddExtension(LocalMirrorHook::D3D9Extension::BeginScene, &beginScene);
+         LocalMirrorHook::D3D9::AddExtension(LocalMirrorHook::D3D9Extension::EndScene, &endScene);
+         LocalMirrorHook::D3D9::AddExtension(LocalMirrorHook::D3D9Extension::BeforeReset, &beforeReset);
+         LocalMirrorHook::D3D9::AddExtension(LocalMirrorHook::D3D9Extension::AfterReset, &afterReset);
 
          Helpers::WndProcHook::addExtension(&wndProcExtension);
          while (!isImguiInitialized) Sleep(1000);

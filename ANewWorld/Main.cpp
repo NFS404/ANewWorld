@@ -32,7 +32,7 @@
 // Helpers
 #include "Helpers/Settings/Settings.h"
 #include "Helpers/WndProc/WndProcHook.h"
-#include "Helpers/LocalMirrorHook/LocalMirrorHook.h"
+#include "Helpers/LocalMirrorHook/LocalMirrorHook.hpp"
 // Extensions
 #include "Extensions/Extensions.h"
 #include "Extensions/InGame Menu/InGameMenu.h"
@@ -67,20 +67,19 @@ namespace TemporaryHelper {
 
 DWORD WINAPI Init(LPVOID) {
    Settings::loadSettings();
-   if (LocalMirrorHook::Prepare()) {
-      // Helpers
-      Helpers::WndProcHook::Init();
+   // Helpers
+   LocalMirrorHook::Prepare();
+   Helpers::WndProcHook::Init();
 
-      // Extensions
-      Extensions::InGameMenu::Init();
-      while (!Extensions::pImGuiIO)
-         Sleep(100);
-      Extensions::DI8::Init();
-      Extensions::WndProc::InitAll();
+   // Extensions
+   Extensions::InGameMenu::Init();
+   while (!Extensions::pImGuiIO)
+      Sleep(100);
+   Extensions::DI8::Init();
+   Extensions::WndProc::InitAll();
 
-      // InGameMenu Items
-      Extensions::InGameMenu::loadItemsToInGameMenu();
-   } else return FALSE;
+   // InGameMenu Items
+   Extensions::InGameMenu::loadItemsToInGameMenu();
 
    static std::string copyright = "Copyright (c) Berkay Yigit - berkay(2578). Greets to GamerZ.";
    return TRUE;

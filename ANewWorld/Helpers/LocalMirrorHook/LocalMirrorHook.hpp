@@ -1,19 +1,19 @@
 /*
    MIT License
-   
+
    Copyright (c) 2019 Berkay Yigit <berkay2578@gmail.com>
-   Nickname(s) used by the copyright holder: 'berkay2578', 'berkayylmao'.
-   
+       Copyright holder detail: Nickname(s) used by the copyright holder: 'berkay2578', 'berkayylmao'.
+
    Permission is hereby granted, free of charge, to any person obtaining a copy
    of this software and associated documentation files (the "Software"), to deal
    in the Software without restriction, including without limitation the rights
    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
    copies of the Software, and to permit persons to whom the Software is
    furnished to do so, subject to the following conditions:
-   
+
    The above copyright notice and this permission notice shall be included in all
    copies or substantial portions of the Software.
-   
+
    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,40 +24,14 @@
 */
 
 #pragma once
+
 #include "stdafx.h"
-#include <d3d9.h>
-#include <dinput.h>
+#include "D3D9\D3D9Hook.hpp"
+#include "DI8\DI8Hook.hpp"
 
 namespace LocalMirrorHook {
-   namespace D3D9 {
-      enum class D3D9Extension {
-         BeginScene,
-         EndScene,
-         BeforeReset,
-         AfterReset
-      };
-
-      HRESULT AddExtension(D3D9Extension extensionType, LPVOID extensionAddress);
-      HWND GetWindowHandle();
-      LPDIRECT3DDEVICE9 GetD3D9Device();
-      bool IsReady();      
-      void Init();
+   static void Prepare() {
+      D3D9::Init();
+      DI8::Init();
    }
-   namespace DI8 {
-      enum class DI8Device {
-         Keyboard,
-         Mouse
-      };
-      enum class DI8Extension {
-         GetDeviceState
-      };
-      
-      HRESULT AddExtension(DI8Device deviceType, DI8Extension extensionType, LPVOID extensionAddress);
-      LPDIRECTINPUT8A GetDirectInput8A();
-      LPDIRECTINPUTDEVICE8A GetDirectInputDevice8A(DI8Device deviceType);
-      bool IsReady();
-   }
-   
-   bool Prepare();
-   bool IsReady();
 }

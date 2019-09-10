@@ -88,6 +88,12 @@
     <Filter Include="default">
       <UniqueIdentifier>{832699c5-1f3e-4e90-a4c4-29f66c8ff63d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Helpers\LocalMirrorHook\D3D9">
+      <UniqueIdentifier>{d4d50c91-6765-4e71-a256-231d1934b20c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\LocalMirrorHook\DI8">
+      <UniqueIdentifier>{32943d4c-46b6-48d8-b4db-7899a29deb21}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Extensions\Extensions.h">
@@ -198,9 +204,6 @@
     <ClInclude Include="Helpers\Game Internals\Gameplay\Variables.h">
       <Filter>Helpers\Game Internals\Gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="Helpers\Game Internals\Gameplay\World.h">
-      <Filter>Helpers\Game Internals\Gameplay</Filter>
-    </ClInclude>
     <ClInclude Include="Helpers\Game Internals\Config\Config.h">
       <Filter>Helpers\Game Internals\Config</Filter>
     </ClInclude>
@@ -212,15 +215,6 @@
     </ClInclude>
     <ClInclude Include="Helpers\Game Internals\Config\Player.h">
       <Filter>Helpers\Game Internals\Config</Filter>
-    </ClInclude>
-    <ClInclude Include="Helpers\LocalMirrorHook\D3D9Types.h">
-      <Filter>Helpers\LocalMirrorHook</Filter>
-    </ClInclude>
-    <ClInclude Include="Helpers\LocalMirrorHook\DI8Types.h">
-      <Filter>Helpers\LocalMirrorHook</Filter>
-    </ClInclude>
-    <ClInclude Include="Helpers\LocalMirrorHook\LocalMirrorHook.h">
-      <Filter>Helpers\LocalMirrorHook</Filter>
     </ClInclude>
     <ClInclude Include="Helpers\LocalMirrorHook\VTableHook.hpp">
       <Filter>Helpers\LocalMirrorHook</Filter>
@@ -393,6 +387,21 @@
     <ClInclude Include="Main\Modding\Hooks\CreateFile.hpp">
       <Filter>Main\Modding\Hooks</Filter>
     </ClInclude>
+    <ClInclude Include="Helpers\LocalMirrorHook\D3D9\D3D9Types.h">
+      <Filter>Helpers\LocalMirrorHook\D3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\LocalMirrorHook\DI8\DI8Types.h">
+      <Filter>Helpers\LocalMirrorHook\DI8</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\LocalMirrorHook\LocalMirrorHook.hpp">
+      <Filter>Helpers\LocalMirrorHook</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\LocalMirrorHook\DI8\DI8Hook.hpp">
+      <Filter>Helpers\LocalMirrorHook\DI8</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\LocalMirrorHook\D3D9\D3D9Hook.hpp">
+      <Filter>Helpers\LocalMirrorHook\D3D9</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Extensions\DInput8\DI8Extension.cpp">
@@ -431,20 +440,15 @@
     <ClCompile Include="Helpers\WndProc\WndProcHook.cpp">
       <Filter>Helpers\WndProc</Filter>
     </ClCompile>
-    <ClCompile Include="Helpers\LocalMirrorHook\LocalMirrorHook.cpp">
-      <Filter>Helpers\LocalMirrorHook</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>default</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ANewWorld.licenseheader">
-      <Filter>default</Filter>
-    </None>
     <None Include="cpp.hint">
       <Filter>default</Filter>
     </None>
+    <None Include="ANewWorld.licenseheader" />
   </ItemGroup>
 </Project>

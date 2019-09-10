@@ -154,8 +154,8 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)poco\Net\include;$(SolutionDir)poco\Foundation\include;$(DXSDK_DIR)Include;$(SolutionDir)inc;$(ProjectDir)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include;$(SolutionDir)inc;$(ProjectDir)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
@@ -174,7 +174,7 @@
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
       <ConformanceMode>false</ConformanceMode>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <ExceptionHandling>Async</ExceptionHandling>
+      <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -184,7 +184,7 @@
       <RandomizedBaseAddress>
       </RandomizedBaseAddress>
       <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86;$(SolutionDir)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d9.lib;dinput8.lib;Shlwapi.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Version>1.0</Version>
       <PreventDllBinding>false</PreventDllBinding>
       <AssemblyDebug>false</AssemblyDebug>
@@ -196,6 +196,8 @@
       <MergeSections>
       </MergeSections>
       <ImageHasSafeExceptionHandlers>true</ImageHasSafeExceptionHandlers>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
     </Link>
     <PostBuildEvent>
       <Command>call "$(SolutionDir)$(Configuration)\copy.bat" "$(SolutionDir)$(Configuration)\ANewWorld.WorldMod"</Command>
@@ -333,7 +335,6 @@
     <ClInclude Include="Helpers\Game Internals\Gameplay\Gameplay.h" />
     <ClInclude Include="Helpers\Game Internals\Gameplay\Player.h" />
     <ClInclude Include="Helpers\Game Internals\Gameplay\Variables.h" />
-    <ClInclude Include="Helpers\Game Internals\Gameplay\World.h" />
     <ClInclude Include="Helpers\imgui\dx9\imgui_impl_dx9.h" />
     <ClInclude Include="Helpers\imgui\dx9\imgui_impl_win32.h" />
     <ClInclude Include="Helpers\imgui\imconfig.h" />
@@ -346,9 +347,11 @@
     <ClInclude Include="Helpers\imgui\stb_rect_pack.h" />
     <ClInclude Include="Helpers\imgui\stb_textedit.h" />
     <ClInclude Include="Helpers\imgui\stb_truetype.h" />
-    <ClInclude Include="Helpers\LocalMirrorHook\D3D9Types.h" />
-    <ClInclude Include="Helpers\LocalMirrorHook\DI8Types.h" />
-    <ClInclude Include="Helpers\LocalMirrorHook\LocalMirrorHook.h" />
+    <ClInclude Include="Helpers\LocalMirrorHook\D3D9\D3D9Hook.hpp" />
+    <ClInclude Include="Helpers\LocalMirrorHook\D3D9\D3D9Types.h" />
+    <ClInclude Include="Helpers\LocalMirrorHook\DI8\DI8Hook.hpp" />
+    <ClInclude Include="Helpers\LocalMirrorHook\DI8\DI8Types.h" />
+    <ClInclude Include="Helpers\LocalMirrorHook\LocalMirrorHook.hpp" />
     <ClInclude Include="Helpers\LocalMirrorHook\VTableHook.hpp" />
     <ClInclude Include="Helpers\Memory\Memory.h" />
     <ClInclude Include="Helpers\ServerTalk\IServerTalk.hpp" />
@@ -408,7 +411,6 @@
     <ClCompile Include="Helpers\imgui\imgui_widgets.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Helpers\LocalMirrorHook\LocalMirrorHook.cpp" />
     <ClCompile Include="Helpers\Memory\Memory.cpp" />
     <ClInclude Include="Helpers\ServerTalk\GameServerTalk.hpp" />
     <ClCompile Include="Helpers\Settings\Settings.cpp" />
