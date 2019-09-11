@@ -41,16 +41,16 @@ namespace LocalMirrorHook {
    };
 
    namespace D3D9 {
-      static DWORD             d3dDeviceAddress               = NULL;
-      static LPDIRECT3DDEVICE9 d3dDevice                      = nullptr;
-      static HWND              d3dWindow                      = nullptr;
+      inline DWORD             d3dDeviceAddress               = NULL;
+      inline LPDIRECT3DDEVICE9 d3dDevice                      = nullptr;
+      inline HWND              d3dWindow                      = nullptr;
 
-      static std::vector<BeginScene_t> vBeginSceneExtensions  ={};
-      static std::vector<EndScene_t>   vEndSceneExtensions    ={};
-      static std::vector<Reset_t>      vBeforeResetExtensions ={};
-      static std::vector<Reset_t>      vAfterResetExtensions  ={};
+      inline std::vector<BeginScene_t> vBeginSceneExtensions  ={};
+      inline std::vector<EndScene_t>   vEndSceneExtensions    ={};
+      inline std::vector<Reset_t>      vBeforeResetExtensions ={};
+      inline std::vector<Reset_t>      vAfterResetExtensions  ={};
 
-      static bool isExtenderReady                             = false;
+      inline bool isExtenderReady                             = false;
 
    #pragma region function hooks
       static unique_ptr<VTableHook> d3dDeviceHook       = nullptr;
@@ -61,41 +61,32 @@ namespace LocalMirrorHook {
 
       static HRESULT WINAPI hkBeginScene(LPDIRECT3DDEVICE9 pDevice) {
          if (pDevice->TestCooperativeLevel() == D3D_OK) {
-            if (!vBeginSceneExtensions.empty()) {
-               for (BeginScene_t beginSceneExtension : vBeginSceneExtensions) {
-                  if (beginSceneExtension)
-                     beginSceneExtension(pDevice);
-               }
+            for (BeginScene_t beginSceneExtension : vBeginSceneExtensions) {
+               if (beginSceneExtension)
+                  beginSceneExtension(pDevice);
             }
          }
          return origBeginScene(pDevice);
       }
       static HRESULT WINAPI hkEndScene(LPDIRECT3DDEVICE9 pDevice) {
          if (pDevice->TestCooperativeLevel() == D3D_OK) {
-            if (!vEndSceneExtensions.empty()) {
-               for (EndScene_t endSceneExtension : vEndSceneExtensions) {
-                  if (endSceneExtension)
-                     endSceneExtension(pDevice);
-               }
+            for (EndScene_t endSceneExtension : vEndSceneExtensions) {
+               if (endSceneExtension)
+                  endSceneExtension(pDevice);
             }
          }
          return origEndScene(pDevice);
       }
       static HRESULT WINAPI hkReset(LPDIRECT3DDEVICE9 pDevice, D3DPRESENT_PARAMETERS* pPresentationParameters) {
-         if (!vBeforeResetExtensions.empty()) {
-            for (Reset_t beforeResetExtension : vBeforeResetExtensions) {
-               if (beforeResetExtension)
-                  beforeResetExtension(pDevice, pPresentationParameters);
-            }
+         for (Reset_t beforeResetExtension : vBeforeResetExtensions) {
+            if (beforeResetExtension)
+               beforeResetExtension(pDevice, pPresentationParameters);
          }
 
          auto retOrigReset = origReset(pDevice, pPresentationParameters);
-
-         if (!vAfterResetExtensions.empty()) {
-            for (Reset_t afterResetExtension : vAfterResetExtensions) {
-               if (afterResetExtension)
-                  afterResetExtension(pDevice, pPresentationParameters);
-            }
+         for (Reset_t afterResetExtension : vAfterResetExtensions) {
+            if (afterResetExtension)
+               afterResetExtension(pDevice, pPresentationParameters);
          }
 
          return retOrigReset;

@@ -42,14 +42,13 @@ namespace LocalMirrorHook {
    };
 
    namespace DI8 {
-      static std::map<DI8Device, std::vector<GetDeviceState_t>> mGetDeviceStateExtensions;
+      inline std::map<DI8Device, std::vector<GetDeviceState_t>> mGetDeviceStateExtensions;
 
    #pragma region function hooks
-      static std::map<DWORD, GetDeviceState_t> origGetDeviceStates_Keyboard;
-      static std::map<DWORD, GetDeviceState_t> origGetDeviceStates_Mouse;
-
-      static HRESULT WINAPI hkGetDeviceState_Keyboard(HINSTANCE hInstance, DWORD cbData, LPVOID lpvData) {
-         auto retOrig = origGetDeviceStates_Keyboard[(DWORD)hInstance](hInstance, cbData, lpvData);
+      inline GetDeviceState_t origGetDeviceStateA_Keyboard;
+      inline GetDeviceState_t origGetDeviceStateA_Mouse;
+      static HRESULT WINAPI hkGetDeviceStateA_Keyboard(HINSTANCE hInstance, DWORD cbData, LPVOID lpvData) {
+         auto retOrig = origGetDeviceStateA_Keyboard(hInstance, cbData, lpvData);
 
          for (GetDeviceState_t keyboardExtension : mGetDeviceStateExtensions[DI8Device::Keyboard]) {
             if (keyboardExtension)
@@ -57,8 +56,29 @@ namespace LocalMirrorHook {
          }
          return retOrig;
       }
-      static HRESULT WINAPI hkGetDeviceState_Mouse(HINSTANCE hInstance, DWORD cbData, LPVOID lpvData) {
-         auto retOrig = origGetDeviceStates_Mouse[(DWORD)hInstance](hInstance, cbData, lpvData);
+      static HRESULT WINAPI hkGetDeviceStateA_Mouse(HINSTANCE hInstance, DWORD cbData, LPVOID lpvData) {
+         auto retOrig = origGetDeviceStateA_Mouse(hInstance, cbData, lpvData);
+
+         for (GetDeviceState_t mouseExtension : mGetDeviceStateExtensions[DI8Device::Mouse]) {
+            if (mouseExtension)
+               mouseExtension(hInstance, cbData, lpvData);
+         }
+         return retOrig;
+      }
+
+      inline GetDeviceState_t origGetDeviceStateW_Keyboard;
+      inline GetDeviceState_t origGetDeviceStateW_Mouse;
+      static HRESULT WINAPI hkGetDeviceStateW_Keyboard(HINSTANCE hInstance, DWORD cbData, LPVOID lpvData) {
+         auto retOrig = origGetDeviceStateW_Keyboard(hInstance, cbData, lpvData);
+
+         for (GetDeviceState_t keyboardExtension : mGetDeviceStateExtensions[DI8Device::Keyboard]) {
+            if (keyboardExtension)
+               keyboardExtension(hInstance, cbData, lpvData);
+         }
+         return retOrig;
+      }
+      static HRESULT WINAPI hkGetDeviceStateW_Mouse(HINSTANCE hInstance, DWORD cbData, LPVOID lpvData) {
+         auto retOrig = origGetDeviceStateW_Mouse(hInstance, cbData, lpvData);
 
          for (GetDeviceState_t mouseExtension : mGetDeviceStateExtensions[DI8Device::Mouse]) {
             if (mouseExtension)
@@ -91,24 +111,31 @@ namespace LocalMirrorHook {
             DWORD* inputTable;
             LPDIRECTINPUT8A lpdi8 = (LPDIRECTINPUT8A)var;
             LPDIRECTINPUTDEVICE8A device;
+            static bool keyboardCaptured = false;
+            static bool mouseCaptured    = false;
 
-            if (deviceType == DI8DEVTYPE_KEYBOARD) {
+            if (deviceType == DI8DEVTYPE_KEYBOARD && !keyboardCaptured) {
                lpdi8->CreateDevice(lpddi->guidInstance, &device, NULL);
                inputTable = *(PDWORD*)device;
-               origGetDeviceStates_Keyboard[(DWORD)lpdi8] = (GetDeviceState_t)(DWORD)inputTable[9];
+               origGetDeviceStateA_Keyboard = (GetDeviceState_t)(DWORD)inputTable[9];
 
                Memory::openMemoryAccess(inputTable[9], 4);
-               inputTable[9] = (DWORD)hkGetDeviceState_Keyboard;
+               inputTable[9] = (DWORD)hkGetDeviceStateA_Keyboard;
                Memory::restoreMemoryAccess();
-            } else {
-               lpdi8->CreateDevice(lpddi->guidInstance, &device, NULL);
-               inputTable = *(PDWORD*)device;
-               origGetDeviceStates_Mouse[(DWORD)lpdi8] = (GetDeviceState_t)(DWORD)inputTable[9];
-
-               Memory::openMemoryAccess(inputTable[9], 4);
-               inputTable[9] = (DWORD)hkGetDeviceState_Mouse;
-               Memory::restoreMemoryAccess();
+               keyboardCaptured = true;
             }
+            if (deviceType == DI8DEVTYPE_MOUSE && !mouseCaptured) {
+               lpdi8->CreateDevice(lpddi->guidInstance, &device, NULL);
+               inputTable = *(PDWORD*)device;
+               origGetDeviceStateA_Mouse = (GetDeviceState_t)(DWORD)inputTable[9];
+
+               Memory::openMemoryAccess(inputTable[9], 4);
+               inputTable[9] = (DWORD)hkGetDeviceStateA_Mouse;
+               Memory::restoreMemoryAccess();
+               mouseCaptured = true;
+            }
+            if (keyboardCaptured && mouseCaptured)
+               return DIENUM_STOP;
          }
 
          return DIENUM_CONTINUE;
@@ -119,58 +146,73 @@ namespace LocalMirrorHook {
             DWORD* inputTable;
             LPDIRECTINPUT8W lpdi8 = (LPDIRECTINPUT8W)var;
             LPDIRECTINPUTDEVICE8W device;
+            static bool keyboardCaptured = false;
+            static bool mouseCaptured    = false;
 
-            if (deviceType == DI8DEVTYPE_KEYBOARD) {
+            if (deviceType == DI8DEVTYPE_KEYBOARD && !keyboardCaptured) {
                lpdi8->CreateDevice(lpddi->guidInstance, &device, NULL);
                inputTable = *(PDWORD*)device;
-               origGetDeviceStates_Keyboard[(DWORD)lpdi8] = (GetDeviceState_t)(DWORD)inputTable[9];
+               origGetDeviceStateW_Keyboard = (GetDeviceState_t)(DWORD)inputTable[9];
 
                Memory::openMemoryAccess(inputTable[9], 4);
-               inputTable[9] = (DWORD)hkGetDeviceState_Keyboard;
+               inputTable[9] = (DWORD)hkGetDeviceStateW_Keyboard;
                Memory::restoreMemoryAccess();
-            } else {
-               lpdi8->CreateDevice(lpddi->guidInstance, &device, NULL);
-               inputTable = *(PDWORD*)device;
-               origGetDeviceStates_Mouse[(DWORD)lpdi8] = (GetDeviceState_t)(DWORD)inputTable[9];
-
-               Memory::openMemoryAccess(inputTable[9], 4);
-               inputTable[9] = (DWORD)hkGetDeviceState_Mouse;
-               Memory::restoreMemoryAccess();
+               keyboardCaptured = true;
             }
+            if (deviceType == DI8DEVTYPE_MOUSE && !mouseCaptured) {
+               lpdi8->CreateDevice(lpddi->guidInstance, &device, NULL);
+               inputTable = *(PDWORD*)device;
+               origGetDeviceStateW_Mouse = (GetDeviceState_t)(DWORD)inputTable[9];
+
+               Memory::openMemoryAccess(inputTable[9], 4);
+               inputTable[9] = (DWORD)hkGetDeviceStateW_Mouse;
+               Memory::restoreMemoryAccess();
+               mouseCaptured = true;
+            }
+            if (keyboardCaptured && mouseCaptured)
+               return DIENUM_STOP;
          }
 
          return DIENUM_CONTINUE;
       }
 
-      static DWORD origCall = 0x597E1A;
-      static void __declspec(naked) hkDirectInput8ACreate() {
-         __asm {
-            enter 0, 0
-            pushad
-         }
-         LPDIRECTINPUT8A lpdi8A;
+      inline DWORD origCallA = 0x597E1A;
+      static void __stdcall hkDirectInput8ACreate() {
+         LPDIRECTINPUT8A lpdi8;
+         PDWORD var;
          __asm {
             push eax
+            push ebx
             mov eax, [ecx+0xB4]
-            mov eax, [eax]
-            mov[lpdi8A], eax
+            mov[lpdi8], eax
+            mov[var], ecx
+         }
+         lpdi8->EnumDevices(DI8DEVCLASS_ALL, (LPDIENUMDEVICESCALLBACKA)Memory::makeAbsolute(0x597D24), var, DIEDFL_ATTACHEDONLY);
+         lpdi8->EnumDevices(DI8DEVCLASS_ALL, &enumCallbackA, lpdi8, DIEDFL_ATTACHEDONLY);
+         __asm {
+            pop ebx
             pop eax
          }
-         lpdi8A->EnumDevices(DI8DEVCLASS_ALL, &enumCallbackA, NULL, DIEDFL_ATTACHEDONLY);
-         __asm {
-            popad
-            leave
-            jmp[origCall]
-         }
       }
+
+      inline DWORD origCallW = 0x3C4E30;
+      static void __stdcall hkDirectInput8WCreate() {
+         __asm {
+            call[origCallW]
+            pushad
+         }
+         (*(LPDIRECTINPUT8W*)Memory::makeAbsolute(0x9C2C34))->EnumDevices(DI8DEVCLASS_ALL, &enumCallbackW, (*(LPDIRECTINPUT8W*)Memory::makeAbsolute(0x9C2C34)), DIEDFL_ATTACHEDONLY);
+         __asm popad;
+      }
+
       static void Init() {
          mGetDeviceStateExtensions[DI8Device::Keyboard] = std::vector<GetDeviceState_t>();
          mGetDeviceStateExtensions[DI8Device::Mouse]    = std::vector<GetDeviceState_t>();
 
-         (*(LPDIRECTINPUT8W*)Memory::makeAbsolute(0x9C2C34))->EnumDevices(DI8DEVCLASS_ALL, &enumCallbackW, NULL, DIEDFL_ATTACHEDONLY);
-
-         origCall += Memory::baseAddress;
-         Memory::writeJMP(0x597ECE, (DWORD)&hkDirectInput8ACreate, false);
+         origCallA += Memory::baseAddress;
+         origCallW += Memory::baseAddress;
+         Memory::writeCall(0x597ECE, (DWORD)&hkDirectInput8ACreate, false);
+         Memory::writeCall(0x3C6387, (DWORD)&hkDirectInput8WCreate, false);
       }
    }
 }

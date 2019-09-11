@@ -85,28 +85,27 @@ DWORD WINAPI Init(LPVOID) {
    return TRUE;
 }
 
-
-BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID) {
+BOOL WINAPI DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID) {
    if (ul_reason_for_call == DLL_PROCESS_ATTACH) { // hook: start -> _tmainCRTStartup
       DisableThreadLibraryCalls(hModule);
       AllocConsole(); freopen("CONOUT$", "w", stdout);
-      int32_t nArgs;
-      LPWSTR* szArgList = CommandLineToArgvW(GetCommandLineW(), &nArgs);
-      if (nArgs < 5) {
-         MessageBoxA(nullptr, "Invalid command line. Report this to a developer.", "Error", MB_ICONERROR);
-         exit(-1);
-      }
-
       Memory::Init();
 
       // Hook eInitEngine - to edit window properties (title & class names)
       TemporaryHelper::hkEInitEngineRet += Memory::baseAddress;
       Memory::writeCall(0x24F156, (DWORD)&TemporaryHelper::hkEInitEngine, false);
 
-      // Set up ExternalServerTalk
-      ExternalServerTalk::GetInstance()->setServerInfo(szArgList[2]);
-      std::wstring wstrUserToken(szArgList[3]);
-      ExternalServerTalk::GetInstance()->setUserInfo(std::string(wstrUserToken.begin(), wstrUserToken.end()), std::stoi(szArgList[4]));
+      //int32_t nArgs;
+      //LPWSTR* szArgList = CommandLineToArgvW(GetCommandLineW(), &nArgs);
+      //if (nArgs < 5) {
+      //   MessageBoxA(nullptr, "Invalid command line. Report this to a developer.", "Error", MB_ICONERROR);
+      //   exit(-1);
+      //}
+      //
+      //// Set up ExternalServerTalk
+      //ExternalServerTalk::GetInstance()->setServerInfo(szArgList[2]);
+      //std::wstring wstrUserToken(szArgList[3]);
+      //ExternalServerTalk::GetInstance()->setUserInfo(std::string(wstrUserToken.begin(), wstrUserToken.end()), std::stoi(szArgList[4]));
 
       // redirect OutputDebugStringA to printf
       DWORD addrOutputDebugStringA = Memory::makeAbsolute(0x71D140);
@@ -148,7 +147,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID) {
       std::rename("dinput8.dll", "dinput8.dll.DisabledByANewWorld");
 
       // Run ANewWorld
-      Modding::Init();
+      //Modding::Init();
       CreateThread(NULL, 0, &Init, NULL, 0, NULL);
    }
    return TRUE;
