@@ -29,39 +29,38 @@
 #include <algorithm> // std::find
 #include <utility>   // unique_ptr
 // Helpers
-#define CPPHTTPLIB_ZLIB_SUPPORT
+//#define CPPHTTPLIB_ZLIB_SUPPORT -- someone fix this
 #include <httplib.h>
 
 class ExternalServerTalk : public IServerTalk {
-   static inline ExternalServerTalk* pInstance = nullptr;
-
+   int32_t     port;
    uint32_t    userID;
    std::string securityToken;
 
+   ExternalServerTalk() : port(80), userID(0), securityToken(std::string()) {}
 public:
    std::unique_ptr<httplib::Client> httpCli;
 
-   ExternalServerTalk() = default;
    ExternalServerTalk(const ExternalServerTalk&) = delete;
    void operator=(const ExternalServerTalk&) = delete;
    static ExternalServerTalk* GetInstance() {
-      if (!ExternalServerTalk::pInstance) {
-         static ExternalServerTalk instance;
-         ExternalServerTalk::pInstance = &instance;
-      }
-      return ExternalServerTalk::pInstance;
+      static ExternalServerTalk instance;
+      return &instance;
    }
 
    void setServerInfo(LPCWSTR url) {
-      int32_t port = 80;
       // parse url, from https://stackoverflow.com/a/11044337, modified
       {
          std::string uri = std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(url);
          auto uriBegin   = uri.begin();
          auto uriEnd     = uri.end();
 
-         auto pathStart = std::find(uriBegin, uriEnd, '/');
-         auto hostEnd   = std::find(uriBegin, pathStart != uriEnd ? pathStart : uriEnd, ':');
+         auto protocolStart = uri.begin();
+         auto protocolEnd   = std::find(protocolStart, uriEnd, ':');
+
+         auto hostStart = protocolEnd + 3;
+         auto pathStart = std::find(hostStart, uriEnd, '/');
+         auto hostEnd   = std::find(hostStart, pathStart != uriEnd ? pathStart : uriEnd, ':');
 
          // port
          if (hostEnd != uriEnd && hostEnd[0] == ':') {
@@ -73,13 +72,14 @@ public:
          SetBaseUrl(std::string(uriBegin, hostEnd) + std::string(pathStart, uriEnd));
          SetBaseRawUrl(std::string(uriBegin, hostEnd));
       }
-
-      httpCli.reset();
-      httpCli = std::make_unique<httplib::Client>(GetBaseUrl().c_str(), port);
    }
    void setUserInfo(const std::string& token, uint32_t userID) {
       this->securityToken = token;
       this->userID = userID;
+   }
+   void setHttpCli() {
+      httpCli.reset();
+      httpCli = std::make_unique<httplib::Client>(GetBaseUrl().c_str(), port);
    }
 
    std::string UrlEncode(const std::string& str) override {
