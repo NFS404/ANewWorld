@@ -39,21 +39,17 @@ namespace Extensions {
    ImGuiIO* pImGuiIO = nullptr;
    namespace InGameMenu {
       _BaseInGameMenuItem* activeItem = nullptr;
-      std::vector<_BaseInGameMenuItem*> items      ={};
+      std::vector<_BaseInGameMenuItem*> items ={};
 
-      bool isImguiInitialized  = false;
-      bool isMainWindowVisible = true;
-      bool isFirstTimeUser     = false;
-      bool hasShownFirstWindow = false;
-
-      RECT clientRect ={ 0 };
+      bool isImguiInitialized            = false;
+      bool isMainWindowVisible           = true;
+      bool isFirstTimeUser               = false;
+      bool hasUserSeenFirstLoadingScreen = false;
 
       void showUserGuide() {
          if (isFirstTimeUser) {
             if (ImGui::Begin("User Guide", &isFirstTimeUser)) {
                ImGui::BulletText("Press Insert to show/hide ANewWorld.");
-               ImGui::BulletText("Double-click on title bar to collapse windows.");
-               ImGui::BulletText("Click and drag on lower right corner to resize windows.");
                ImGui::BulletText("Click and drag on any empty space to move windows.");
                ImGui::BulletText("Mouse Wheel to scroll.");
                ImGui::BulletText("TAB/SHIFT+TAB to cycle through keyboard editable fields.");
@@ -102,82 +98,68 @@ namespace Extensions {
          ImGui::NewFrame();
 
          static float scaling = 1.0f;
-         GetClientRect(Helpers::WndProcHook::windowHandle, &clientRect);
-         scaling = std::max(0.6f, (float)clientRect.right / 2160.0f); // optimized for 4k
+         scaling = std::max(0.6f, pImGuiIO->DisplaySize.y / 2160.0f); // optimized for 4k
          for (int32_t i = 0; i < pImGuiIO->Fonts->Fonts.Size; i++) {
             pImGuiIO->Fonts->Fonts[i]->Scale = scaling;
          }
-
+      }
+      void WINAPI endScene(LPDIRECT3DDEVICE9 pDevice) {
          for (auto item : items) {
             if (item->hasLoadedData) {
                item->onFrame();
             }
          }
-      }
-      void WINAPI endScene(LPDIRECT3DDEVICE9 pDevice) {
+
          if (isImguiInitialized) {
-            if (!hasShownFirstWindow) {
-               static uint32_t secondsToShow = 3;
-               static uint32_t framesShown   = 0;
-               uint32_t framesToShow         = pImGuiIO->Framerate * secondsToShow;
-
-               ImGui::SetNextWindowBgAlpha(0.0f);
-               ImGui::SetNextWindowSize(pImGuiIO->DisplaySize, ImGuiCond_Always);
-               ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Always);
-               if (ImGui::Begin("##ANewWorld_FirstMenu", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoInputs)) {
-                  static ImVec2 _TitlePlacementVec  ={ 0.0f, 0.0f };
-                  if (_TitlePlacementVec.y == 0.0f) {
-                     ImGui::PushFont(pImGuiIO->Fonts->Fonts[1]);
-                     {
-                        _TitlePlacementVec.x = (pImGuiIO->DisplaySize.x / 2.0f) - ((ImGui::CalcTextSize("A").x / 2.0f) + (ImGui::CalcTextSize("World").x / 2.0f));
-                     } ImGui::PopFont();
-                     ImGui::PushFont(pImGuiIO->Fonts->Fonts[2]);
-                     {
-                        auto& textSize = ImGui::CalcTextSize("New");
-                        _TitlePlacementVec.x -= textSize.x / 2.0f;
-                        _TitlePlacementVec.y = (pImGuiIO->DisplaySize.y / 2);
-
-                     } ImGui::PopFont();
-                  }
-                  ImGui::SetCursorPos(_TitlePlacementVec);
+            if (!hasUserSeenFirstLoadingScreen) {
+               ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+               ImGui::SetNextWindowPos(ImVec2(10.0f, 10.0f), ImGuiCond_Appearing);
+               if (ImGui::Begin("###ANewWorld_FirstMenu", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_AlwaysAutoResize)) {
                   // ANewWorld title 
                   {
                      static float _TitlePlacementDiff;
                      ImGui::PushFont(pImGuiIO->Fonts->Fonts[1]);
                      {
                         ImGui::Text("A");
-                        _TitlePlacementDiff = ImGui::CalcTextSize("A").x;
+                        _TitlePlacementDiff = 10.0f + ImGui::CalcTextSize("A").x;
                      } ImGui::PopFont();
                      ImGui::PushFont(pImGuiIO->Fonts->Fonts[2]);
                      {
-                        ImGui::SameLine(_TitlePlacementVec.x + _TitlePlacementDiff);
+                        ImGui::SameLine(_TitlePlacementDiff);
                         ImGui::TextColored(ImVec4(0.0f, 0.565f, 1.0f, 1.0f), "New");
                         _TitlePlacementDiff += ImGui::CalcTextSize("New").x;
                      } ImGui::PopFont();
                      ImGui::PushFont(pImGuiIO->Fonts->Fonts[1]);
                      {
-                        ImGui::SameLine(_TitlePlacementVec.x + _TitlePlacementDiff);
+                        ImGui::SameLine(_TitlePlacementDiff);
                         ImGui::Text("World");
                         _TitlePlacementDiff += ImGui::CalcTextSize("World").x;
                      } ImGui::PopFont();
                      {
-                        ImGui::SameLine(_TitlePlacementVec.x + _TitlePlacementDiff + 3.0f);
-                        ImGui::SetCursorPosY(_TitlePlacementVec.y - 6.0f);
+                        ImGui::SameLine(_TitlePlacementDiff + 3.0f);
+                        ImGui::SetCursorPosY(15.0f);
                         ImGui::Text("v1.0");
                      }
                   }
                }
-
-               framesShown++;
-               if (framesShown >= framesToShow)
-                  hasShownFirstWindow = true;
+               ImGui::Text("https://github.com/berkayylmao/ANewWorld");
+               ImGui::Text("Features:\n"
+                           " - Anticheat\n"
+                           " - File mods\n"
+                           " - Scripting API\n"
+                           " - New loading screens\n"
+                           " - New safehouses\n"
+                           " - Various gameplay mods\n"
+                           "Find me on Discord! berkayylmao#7392."
+               );
                ImGui::End();
+               ImGui::PopStyleVar();
             } else {
                if (isMainWindowVisible) {
                   showUserGuide();
 
-                  ImGui::SetNextWindowPos(ImVec2(5.0f, 5.0f), ImGuiCond_Once);
-                  if (ImGui::Begin("##ANewWorld_Main", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar)) {
+                  ImGui::SetNextWindowPos(ImVec2(10.0f, 10.0f), ImGuiCond_Once);
+                  if (ImGui::Begin("###ANewWorld_Main", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar)) {
                      // Title
                      static float buttonWidth;
                      {
@@ -200,7 +182,7 @@ namespace Extensions {
                            _TitlePlacementDiff += ImGui::CalcTextSize("World").x;
                         } ImGui::PopFont(); ImGui::SameLine(_TitlePlacementDiff + 3.0f);
                         buttonWidth = ImGui::GetCursorPos().x + ImGui::CalcTextSize("v1.0").x;
-                        ImGui::SetCursorPosY(ImGui::GetStyle().WindowPadding.y - 6.0f);
+                        ImGui::SetCursorPosY(ImGui::GetStyle().WindowPadding.y - 5.0f);
                         ImGui::Text("v1.0");
                      }
 
@@ -227,10 +209,15 @@ namespace Extensions {
       }
 
       void WINAPI beforeReset(LPDIRECT3DDEVICE9 pDevice, D3DPRESENT_PARAMETERS* pPresentationParameters) {
+         for (auto item : items)
+            item->beforeReset();
          if (isImguiInitialized)
             ImGui_ImplDX9_InvalidateDeviceObjects();
       }
       void WINAPI afterReset(LPDIRECT3DDEVICE9 pDevice, D3DPRESENT_PARAMETERS* pPresentationParameters) {
+         for (auto item : items)
+            item->afterReset();
+
          if (!pDevice || pDevice->TestCooperativeLevel() != D3D_OK) {
             if (isImguiInitialized) {
                ImGui_ImplDX9_Shutdown();
@@ -248,7 +235,6 @@ namespace Extensions {
             if (uMsg == WM_QUIT) {
                ImGui_ImplDX9_Shutdown();
                ImGui::DestroyContext();
-               return FALSE;
             }
 
             if (isMainWindowVisible)

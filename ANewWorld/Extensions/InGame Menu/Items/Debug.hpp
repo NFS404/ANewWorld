@@ -58,14 +58,13 @@ namespace Extensions {
                   pActivePVehicle = nullptr;
                   pActiveRigidBody = nullptr;
                   ZeroMemory(szActivePVehicleName, sizeof(szActivePVehicleName));
-               }
-               else {
+               } else {
                   PVehicle* pPVehicle = (PVehicle*)((DWORD)pISimable - 0x24);
                   if (pActivePVehicle != pPVehicle) {
                      pActivePVehicle  = pPVehicle;
                      pActiveRigidBody = (RigidBody*)pActivePVehicle->GetRigidBody();
                      sprintf_s(szActivePVehicleName, sizeof(szActivePVehicleName),
-                        "[i: %d - addr: %p] %s", iActivePVehicle, pActivePVehicle, pActivePVehicle->GetVehicleName());
+                               "[i: %d - addr: %p] %s", iActivePVehicle, pActivePVehicle, pActivePVehicle->GetVehicleName());
                   }
                }
                ImGui::TextColored(ImVec4(0, 1, 0, 1), "Active PVehicle pointer:   %p", pActivePVehicle);
@@ -84,7 +83,7 @@ namespace Extensions {
                   PVehicle* pIteratorPVehicle = (PVehicle*)((DWORD)pIteratorISimable - 0x24);
 
                   sprintf_s(szIteratorItemName, sizeof(szActivePVehicleName),
-                     "[i: %d - addr: %p] %s", i, pIteratorPVehicle, pIteratorPVehicle->GetVehicleName());
+                            "[i: %d - addr: %p] %s", i, pIteratorPVehicle, pIteratorPVehicle->GetVehicleName());
                   if (ImGui::Selectable(szIteratorItemName, pActivePVehicle == pIteratorPVehicle)) {
                      iActivePVehicle  = i;
                      pActivePVehicle  = pIteratorPVehicle;
@@ -255,6 +254,8 @@ namespace Extensions {
          }
 
          const virtual void onFrame() override {}
+         const virtual void beforeReset() override {}
+         const virtual void afterReset() override {}
 
          const virtual bool displayMenuItem(const ImVec2& buttonSize) override {
             ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.98f, 0.59f, 0.26f, 0.40f));

@@ -37,6 +37,7 @@
 //-----------------------------------------------------------------------------
 
 #pragma once
+#define IMGUI_DEFINE_MATH_OPERATORS
 
 //---- Define assertion handler. Defaults to calling assert().
 //#define IM_ASSERT(_EXPR)  MyAssert(_EXPR)

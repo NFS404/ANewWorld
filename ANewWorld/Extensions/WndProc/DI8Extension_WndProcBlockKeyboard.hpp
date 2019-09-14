@@ -38,7 +38,7 @@ namespace Extensions {
                case WM_SYSKEYDOWN: case WM_SYSKEYUP:
                case WM_KEYDOWN: case WM_KEYUP:
                case WM_INPUT:
-                  if (!GameVariables::getVariable(GameVariables::gameWindowActive) || pImGuiIO->WantCaptureKeyboard || pImGuiIO->WantTextInput)
+                  if (!GameVariables::getVariable(GameVariables::gameWindowActive) || pImGuiIO->WantCaptureKeyboard)
                      return FALSE;
                   break;
             }

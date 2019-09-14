@@ -133,12 +133,12 @@ BOOL WINAPI DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID) {
       Memory::writeRet(0x210920, false);
 
       // FastLoading (per nfsw_mod.txt, in order)
-      Memory::writeRaw(0x896D2, false, 2, 0x90, 0x90);
-      Memory::writeRaw(0x360AEE, false, 1, 0xEB);
-      Memory::writeRaw(0x360B27, false, 1, 0x84);
-      Memory::writeRaw(0x360BCD, false, 1, 0xEB);
-      Memory::writeRaw(0x288600, false, 2, 0xEB, 0x35);
-      Memory::writeRaw(0x306452, false, 1, 0xC3);
+      //Memory::writeRaw(0x896D2, false, 2, 0x90, 0x90);
+      //Memory::writeRaw(0x360AEE, false, 1, 0xEB);
+      //Memory::writeRaw(0x360B27, false, 1, 0x84);
+      //Memory::writeRaw(0x360BCD, false, 1, 0xEB);
+      //Memory::writeRaw(0x288600, false, 2, 0xEB, 0x35);
+      //Memory::writeRaw(0x306452, false, 1, 0xC3);
 
       // Let's get rid of ASI loaders while we are at it
       // EDIT: these happen too late, game already imports them --> close the game with a message and restart.

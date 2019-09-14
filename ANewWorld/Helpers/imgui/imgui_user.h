@@ -27,7 +27,7 @@
 #include <vector>
 #include "Helpers\imgui\imgui.h"
 
-namespace ImGui {   
+namespace ImGui {
    void LoadStyle();
 
    bool Combo(const char* label, int* currIndex, std::vector<std::string>& values);

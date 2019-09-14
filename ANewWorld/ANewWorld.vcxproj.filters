@@ -402,6 +402,9 @@
     <ClInclude Include="Helpers\LocalMirrorHook\D3D9\D3D9Hook.hpp">
       <Filter>Helpers\LocalMirrorHook\D3D9</Filter>
     </ClInclude>
+    <ClInclude Include="Extensions\InGame Menu\Items\NewLoadingScreens.hpp">
+      <Filter>Extensions\InGame Menu\Items</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Extensions\DInput8\DI8Extension.cpp">

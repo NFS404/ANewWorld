@@ -29,6 +29,7 @@
 #include "Debug.hpp"
 //#include "CameraEditor.hpp"
 //#include "NewSafehouses.hpp"
+#include "NewLoadingScreens.hpp"
 
 namespace Extensions {
    namespace InGameMenu {
@@ -36,10 +37,12 @@ namespace Extensions {
          static Debug         debug             ={};
          //static HandlingEditor handlingEditor ={};
          //static NewSafehouses newSafehouses     ={};
+         static NewLoadingScreens newLoadingScreens ={};
 
          items.push_back(&debug);
          //items.push_back(&cameraEditor);
          //items.push_back(&newSafehouses);
+         items.push_back(&newLoadingScreens);
          for (auto item : items) {
             if (!item->hasLoadedData)
                item->loadData();

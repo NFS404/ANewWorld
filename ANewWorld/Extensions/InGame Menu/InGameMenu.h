@@ -29,7 +29,7 @@
 namespace Extensions {
    namespace InGameMenu {
       extern std::vector<_BaseInGameMenuItem*> items;
-      extern RECT clientRect;
+      extern bool hasUserSeenFirstLoadingScreen;
       void Init();
    }
 }

@@ -132,9 +132,6 @@ namespace ImGui {
       ImGui::PopStyleVar();
    }
 
-   inline ImVec2 operator-(const ImVec2& l, const ImVec2& r) {
-      return{ l.x - r.x, l.y - r.y };
-   }
    int rotation_start_index;
    void ImRotateStart() {
       rotation_start_index = ImGui::GetWindowDrawList()->VtxBuffer.Size;

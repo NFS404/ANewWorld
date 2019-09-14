@@ -29,12 +29,13 @@
 
 namespace Extensions {
    namespace InGameMenu {
-      class _BaseInGameMenuItem {
-      public:
+      struct _BaseInGameMenuItem {
          bool hasLoadedData            = false;
          const virtual void loadData() = 0;
 
-         const virtual void onFrame() = 0;
+         const virtual void onFrame()     = 0;
+         const virtual void beforeReset() = 0;
+         const virtual void afterReset()  = 0;
 
          const virtual bool displayMenuItem(const ImVec2& buttonSize = ImVec2()) = 0;
          const virtual bool displayMenu() = 0;
