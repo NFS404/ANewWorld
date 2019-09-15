@@ -176,7 +176,6 @@ namespace LocalMirrorHook {
          return DIENUM_CONTINUE;
       }
 
-      inline DWORD origCallA = 0x597E1A;
       static void __stdcall hkDirectInput8ACreate() {
          LPDIRECTINPUT8A lpdi8;
          PDWORD var;
@@ -188,7 +187,8 @@ namespace LocalMirrorHook {
             mov[var], ecx
          }
          lpdi8->EnumDevices(DI8DEVCLASS_ALL, (LPDIENUMDEVICESCALLBACKA)Memory::makeAbsolute(0x597D24), var, DIEDFL_ATTACHEDONLY);
-         lpdi8->EnumDevices(DI8DEVCLASS_ALL, &enumCallbackA, lpdi8, DIEDFL_ATTACHEDONLY);
+         lpdi8->EnumDevices(DI8DEVCLASS_KEYBOARD, &enumCallbackA, lpdi8, DIEDFL_ATTACHEDONLY);
+         lpdi8->EnumDevices(DI8DEVCLASS_POINTER, &enumCallbackA, lpdi8, DIEDFL_ATTACHEDONLY);
          __asm {
             pop ebx
             pop eax
@@ -201,7 +201,8 @@ namespace LocalMirrorHook {
             call[origCallW]
             pushad
          }
-         (*(LPDIRECTINPUT8W*)Memory::makeAbsolute(0x9C2C34))->EnumDevices(DI8DEVCLASS_ALL, &enumCallbackW, (*(LPDIRECTINPUT8W*)Memory::makeAbsolute(0x9C2C34)), DIEDFL_ATTACHEDONLY);
+         (*(LPDIRECTINPUT8W*)Memory::makeAbsolute(0x9C2C34))->EnumDevices(DI8DEVCLASS_KEYBOARD, &enumCallbackW, (*(LPDIRECTINPUT8W*)Memory::makeAbsolute(0x9C2C34)), DIEDFL_ATTACHEDONLY);
+         (*(LPDIRECTINPUT8W*)Memory::makeAbsolute(0x9C2C34))->EnumDevices(DI8DEVCLASS_POINTER, &enumCallbackW, (*(LPDIRECTINPUT8W*)Memory::makeAbsolute(0x9C2C34)), DIEDFL_ATTACHEDONLY);
          __asm popad;
       }
 
@@ -209,7 +210,6 @@ namespace LocalMirrorHook {
          mGetDeviceStateExtensions[DI8Device::Keyboard] = std::vector<GetDeviceState_t>();
          mGetDeviceStateExtensions[DI8Device::Mouse]    = std::vector<GetDeviceState_t>();
 
-         origCallA += Memory::baseAddress;
          origCallW += Memory::baseAddress;
          Memory::writeCall(0x597ECE, (DWORD)&hkDirectInput8ACreate, false);
          Memory::writeCall(0x3C6387, (DWORD)&hkDirectInput8WCreate, false);
