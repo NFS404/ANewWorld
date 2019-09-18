@@ -147,15 +147,6 @@
     <ClInclude Include="Helpers\imgui\imstb_truetype.h">
       <Filter>Helpers\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Helpers\imgui\stb_rect_pack.h">
-      <Filter>Helpers\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Helpers\imgui\stb_textedit.h">
-      <Filter>Helpers\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Helpers\imgui\stb_truetype.h">
-      <Filter>Helpers\imgui</Filter>
-    </ClInclude>
     <ClInclude Include="Helpers\imgui\dx9\imgui_impl_dx9.h">
       <Filter>Helpers\imgui\dx9</Filter>
     </ClInclude>
@@ -405,6 +396,9 @@
     <ClInclude Include="Extensions\InGame Menu\Items\NewLoadingScreens.hpp">
       <Filter>Extensions\InGame Menu\Items</Filter>
     </ClInclude>
+    <ClInclude Include="Helpers\imgui\imgui_freetype.h">
+      <Filter>Helpers\imgui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Extensions\DInput8\DI8Extension.cpp">
@@ -447,6 +441,9 @@
       <Filter>default</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Helpers\imgui\imgui_freetype.cpp">
+      <Filter>Helpers\imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint">

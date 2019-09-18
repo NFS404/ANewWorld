@@ -184,7 +184,7 @@
       <RandomizedBaseAddress>
       </RandomizedBaseAddress>
       <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86;$(SolutionDir)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dinput8.lib;Shell32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dinput8.lib;Shell32.lib;freetype.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Version>1.0</Version>
       <PreventDllBinding>false</PreventDllBinding>
       <AssemblyDebug>false</AssemblyDebug>
@@ -342,14 +342,12 @@
     <ClInclude Include="Helpers\imgui\dx9\imgui_impl_win32.h" />
     <ClInclude Include="Helpers\imgui\imconfig.h" />
     <ClInclude Include="Helpers\imgui\imgui.h" />
+    <ClInclude Include="Helpers\imgui\imgui_freetype.h" />
     <ClInclude Include="Helpers\imgui\imgui_internal.h" />
     <ClInclude Include="Helpers\imgui\imgui_user.h" />
     <ClInclude Include="Helpers\imgui\imstb_rectpack.h" />
     <ClInclude Include="Helpers\imgui\imstb_textedit.h" />
     <ClInclude Include="Helpers\imgui\imstb_truetype.h" />
-    <ClInclude Include="Helpers\imgui\stb_rect_pack.h" />
-    <ClInclude Include="Helpers\imgui\stb_textedit.h" />
-    <ClInclude Include="Helpers\imgui\stb_truetype.h" />
     <ClInclude Include="Helpers\LocalMirrorHook\D3D9\D3D9Hook.hpp" />
     <ClInclude Include="Helpers\LocalMirrorHook\D3D9\D3D9Types.h" />
     <ClInclude Include="Helpers\LocalMirrorHook\DI8\DI8Hook.hpp" />
@@ -368,6 +366,9 @@
     <ClInclude Include="Main\Anticheat\EditWindowProperties.hpp" />
     <ClInclude Include="Main\Modding\Exposed\GameDataHooks.hpp" />
     <ClInclude Include="Main\Modding\Hooks\CreateFile.hpp" />
+    <ClCompile Include="Helpers\imgui\imgui_freetype.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

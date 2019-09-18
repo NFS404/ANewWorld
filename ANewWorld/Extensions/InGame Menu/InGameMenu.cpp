@@ -29,10 +29,12 @@
 // dear imgui
 #include "Helpers\imgui\extra_fonts\RobotoMedium.hpp"
 #include "Helpers\imgui\extra_fonts\CooperHewitt_Roman.hpp"
+#include "Helpers\imgui\extra_fonts\CooperHewitt_Italic.hpp"
 #include "Helpers\imgui\extra_fonts\CooperHewitt_Bold.hpp"
-#include "Helpers\imgui\extra_fonts\Aramis_Book_Italic.hpp"
+#include "Helpers\imgui\extra_fonts\Reg-DB-I.hpp"
 #include "Helpers\imgui\dx9\imgui_impl_dx9.h"
 #include "Helpers\imgui\dx9\imgui_impl_win32.h"
+#include "Helpers\imgui\imgui_freetype.h"
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 namespace Extensions {
@@ -76,14 +78,15 @@ namespace Extensions {
 
       void WINAPI beginScene(LPDIRECT3DDEVICE9 pDevice) {
          if (!isImguiInitialized) {
-            Extensions::pImGuiIO = &ImGui::CreateContext()->IO;
+            pImGuiIO = &ImGui::CreateContext()->IO;
             ImGui_ImplWin32_Init(Helpers::WndProcHook::windowHandle);
             ImGui_ImplDX9_Init(pDevice);
 
-            pImGuiIO->Fonts->AddFontFromMemoryCompressedTTF(RobotoMedium::RobotoMedium_compressed_data, RobotoMedium::RobotoMedium_compressed_size, 21.0f);
+            pImGuiIO->Fonts->AddFontFromMemoryCompressedTTF(RobotoMedium::RobotoMedium_compressed_data, RobotoMedium::RobotoMedium_compressed_size, 24.0f);
             pImGuiIO->Fonts->AddFontFromMemoryCompressedTTF(CooperHewitt_Roman_compressed_data, CooperHewitt_Roman_compressed_size, 64.0f);
             pImGuiIO->Fonts->AddFontFromMemoryCompressedTTF(CooperHewitt_Bold_compressed_data, CooperHewitt_Bold_compressed_size, 64.0f);
-            pImGuiIO->Fonts->Build();
+            pImGuiIO->Fonts->AddFontFromMemoryCompressedTTF(Reg_DB_I_compressed_data, Reg_DB_I_compressed_size, 80.0f);
+            ImGuiFreeType::BuildFontAtlas(pImGuiIO->Fonts, ImGuiFreeType::LightHinting);
             pImGuiIO->FontDefault = NULL;
             pImGuiIO->IniFilename = NULL;
 
@@ -137,7 +140,7 @@ namespace Extensions {
                      } ImGui::PopFont();
                      {
                         ImGui::SameLine(_TitlePlacementDiff + 3.0f);
-                        ImGui::SetCursorPosY(15.0f);
+                        ImGui::SetCursorPosY(5.0f);
                         ImGui::Text("v1.0");
                      }
                   }
