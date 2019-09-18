@@ -273,12 +273,26 @@ namespace Extensions {
                         }
                         // Title
                         {
+                           switch (eventInfo.EventModeId) {
+                              case InternalEventDefinition::EventMode::kEventMode_Circuit:
+                              case InternalEventDefinition::EventMode::kEventMode_Sprint:
+                              case InternalEventDefinition::EventMode::kEventMode_Drag:
+                                 ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.78f, 0.83f, 1.0f, 1.0f));
+                                 break;
+                              case InternalEventDefinition::EventMode::kEventMode_MeetingPlace:
+                                 ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.92f, 1.0f, 0.78f, 1.0f));
+                                 break;
+                              case InternalEventDefinition::EventMode::kEventMode_Pursuit:
+                              case InternalEventDefinition::EventMode::kEventMode_TeamEscape:
+                                 ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.86f, 0.78f, 1.0f));
+                                 break;
+                           }
                            // Event name
                            ImGui::SetWindowFontScale(titleBGSize.y / 80.0f);
                            ImGui::PushFont(pImGuiIO->Fonts->Fonts[3]);
                            {
                               ImGui::SetCursorPos(ImVec2(titleBGSize.x / 12.0f, titleBGPos.y + (titleBGSize.y * 0.1f)));
-                              ImGui::TextColored(ImVec4(0.78f, 0.83f, 1.0f, 1.0f), eventInfo.CourseName.pName);
+                              ImGui::Text(eventInfo.CourseName.pName);
                            } ImGui::PopFont();
 
                            // Event mode
@@ -286,9 +300,10 @@ namespace Extensions {
                            ImGui::PushFont(pImGuiIO->Fonts->Fonts[3]);
                            {
                               ImGui::SetCursorPos(ImVec2(titleBGSize.x / 11.0f, titleBGPos.y + (titleBGSize.y * 0.55f)));
-                              ImGui::TextColored(ImVec4(0.78f, 0.83f, 1.0f, 1.0f), eventInfo.GameModeName.pName);
+                              ImGui::Text(eventInfo.GameModeName.pName);
                            } ImGui::PopFont();
 
+                           ImGui::PopStyleColor();
                            ImGui::SetWindowFontScale(1.0f);
                         }
                      }
