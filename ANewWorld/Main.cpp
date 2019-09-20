@@ -54,18 +54,33 @@ namespace TemporaryHelper {
    }
 
    void WINAPI hkOutputDebugStringA(LPCSTR lpOutputString) {
-      printf(lpOutputString);
+      printf((std::string("[PASS_THROUGH] OutputDebugStringA: ") + std::string(lpOutputString) + '\n').c_str());
    }
    void WINAPI hkOutputDebugStringW(LPCWSTR lpOutputString) {
-      wprintf(lpOutputString);
+      wprintf((std::wstring(L"[PASS_THROUGH] OutputDebugStringW: ") + std::wstring(lpOutputString) + L'\n').c_str());
    }
    void __cdecl hkPassThrough_fputs(const char* Str, FILE* File) {
-      printf(Str);
+      printf((std::string("[PASS_THROUGH] fputs: ") + std::string(Str) + '\n').c_str());
       fputs(Str, File);
    }
 }
 
 DWORD WINAPI Init(LPVOID) {
+   Settings::Init();
+   Logger::currentLogLevel = Settings::instance.logLevel;
+   if (Settings::instance.logLevel == LogLevel::Debug) {
+      AllocConsole();
+      freopen("CONOUT$", "w", stdout);
+   } else {
+      std::stringstream ss;
+      auto _time = std::time(nullptr);
+      ss << std::put_time(localtime(&_time), "Logs\\ANewWorld_Log [%d-%m-%Y %H.%M.%S].log");
+
+      std::filesystem::create_directories(Settings::mainFolder + "Logs");
+      freopen((Settings::mainFolder + ss.str()).c_str(), "w+", stdout);
+   }
+   Log(LogLevel::Info, std::string("Welcome to ANewWorld.\n") + Logger::FormatString("Command line: %ws", GetCommandLineW()));
+
    int32_t nArgs;
    LPWSTR* szArgList = CommandLineToArgvW(GetCommandLineW(), &nArgs);
    if (nArgs < 5) {
@@ -73,27 +88,40 @@ DWORD WINAPI Init(LPVOID) {
       exit(-1);
    }
 
-   // Set up ExternalServerTalk
-   ExternalServerTalk::GetInstance()->setServerInfo(szArgList[2]);
-   std::wstring wstrUserToken(szArgList[3]);
-   ExternalServerTalk::GetInstance()->setUserInfo(std::string(wstrUserToken.begin(), wstrUserToken.end()), std::stoi(szArgList[4]));
-   ExternalServerTalk::GetInstance()->setHttpCli();
-
-   Settings::loadSettings();
    // Helpers
-   LocalMirrorHook::Prepare();
-   Helpers::WndProcHook::Init();
+   {
+      Log(LogLevel::Info, "Initializing helpers.");
+      // Set up ExternalServerTalk
+      {
+         Log(LogLevel::Debug, "Setting up ExternalServerTalk.");
+         ExternalServerTalk::GetInstance()->setServerInfo(szArgList[2]);
+         std::wstring wstrUserToken(szArgList[3]);
+         ExternalServerTalk::GetInstance()->setUserInfo(std::string(wstrUserToken.begin(), wstrUserToken.end()), std::stoi(szArgList[4]));
+         ExternalServerTalk::GetInstance()->setHttpCli();
+      }
+      Log(LogLevel::Debug, "Setting up LocalMirrorHook.");
+      LocalMirrorHook::Prepare();
+      Log(LogLevel::Debug, "Setting up WndProcHook.");
+      Helpers::WndProcHook::Init();
+   }
 
    // Extensions
-   Extensions::InGameMenu::Init();
-   while (!Extensions::pImGuiIO)
-      Sleep(100);
-   Extensions::DI8::Init();
-   Extensions::WndProc::InitAll();
+   {
+      Log(LogLevel::Info, "Initializing extensions.");
+      Log(LogLevel::Debug, "Setting up InGameMenu.");
+      Extensions::InGameMenu::Init();
+      while (!Extensions::pImGuiIO)
+         Sleep(100);
 
-   // InGameMenu Items
-   Extensions::InGameMenu::loadItemsToInGameMenu();
+      Log(LogLevel::Debug, "Setting up DI8 extensions.");
+      Extensions::DI8::Init();
+      Log(LogLevel::Debug, "Setting up WndProc extensions.");
+      Extensions::WndProc::InitAll();
 
+      // InGameMenu Items
+      Log(LogLevel::Debug, "Loading InGameMenu items.");
+      Extensions::InGameMenu::loadItemsToInGameMenu();
+   }
    static std::string copyright = "Copyright (c) Berkay Yigit - berkay(2578). Greets to GamerZ.";
    return TRUE;
 }
@@ -101,7 +129,6 @@ DWORD WINAPI Init(LPVOID) {
 BOOL WINAPI DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID) {
    if (ul_reason_for_call == DLL_PROCESS_ATTACH) { // hook: start -> _tmainCRTStartup
       DisableThreadLibraryCalls(hModule);
-      AllocConsole(); freopen("CONOUT$", "w", stdout);
       Memory::Init();
 
       // Hook eInitEngine - to edit window properties (title & class names)

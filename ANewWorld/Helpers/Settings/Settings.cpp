@@ -26,45 +26,62 @@
 #include "stdafx.h"
 #include "Settings.h"
 // IO
-#include <iostream>
 #include <fstream>
-#include <experimental/filesystem>
+#include <filesystem>
 // (De)Serialization
 #include <cereal\archives\xml.hpp>
 
 namespace Settings {
-   const std::string mainFolder   = std::experimental::filesystem::current_path().u8string() + std::string("\\ANewWorld");
-   const std::string settingsFile = mainFolder + std::string("\\ANewWorld.xml");
+   std::string mainFolder;
+   std::string settingsFile;
 
-   SettingsType settingsType = {};
+   SettingsType instance ={};
 
    bool loadSettings() {
       try {
-         if (!std::experimental::filesystem::exists(settingsFile)) {
+         Log(LogLevel::Debug, "Loading settings file.");
+         if (!std::filesystem::exists(settingsFile)) {
+            Log(LogLevel::Debug, "Settings file was not found, creating new.");
             saveSettings();
             return true;
          }
          std::ifstream ifs(settingsFile);
          cereal::XMLInputArchive iarchive(ifs);
-         iarchive(cereal::make_nvp("Settings", settingsType));
+         iarchive(cereal::make_nvp("Settings", instance));
       } catch (std::runtime_error& e) {
+         Log(LogLevel::Error, Logger::FormatString("Error during loading settings!\n%s", e.what()));
          MessageBox(NULL, e.what(), "Error during loading settings.", MB_ICONERROR | MB_OK);
          return false;
       }
+      Log(LogLevel::Debug, "Loaded settings file successfully.");
       return true;
    }
 
    bool saveSettings() {
       try {
-         std::experimental::filesystem::create_directories(mainFolder);
+         Log(LogLevel::Debug, "Saving settings file.");
+         std::filesystem::create_directories(mainFolder);
 
          std::ofstream ofs(settingsFile);
          cereal::XMLOutputArchive oarchive(ofs);
-         oarchive(cereal::make_nvp("Settings", settingsType));
+         oarchive(cereal::make_nvp("Settings", instance));
       } catch (std::runtime_error& e) {
+         Log(LogLevel::Error, Logger::FormatString("Error during saving settings!\n%s", e.what()));
          MessageBox(NULL, e.what(), "Error during saving settings.", MB_ICONERROR | MB_OK);
          return false;
       }
+      Log(LogLevel::Debug, "Saved settings file successfully.");
       return true;
+   }
+
+   void Init() {
+      std::vector<wchar_t> _path(2048, 0);
+      GetModuleFileNameW(NULL, &_path[0], _path.size());
+      std::filesystem::path path(&_path[0]);
+
+      mainFolder   = path.parent_path().u8string() + "\\ANewWorld\\";
+      settingsFile = mainFolder + "ANewWorld.xml";
+      Log(LogLevel::Debug, Logger::FormatString("Settings initted successfuly. Target file: %s.", settingsFile.c_str()));
+      loadSettings();
    }
 }

@@ -31,7 +31,7 @@
     <ProjectGuid>{68388F64-B72F-4F62-B99B-5B1289E5F243}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>ANewWorld</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -184,13 +184,12 @@
       <RandomizedBaseAddress>
       </RandomizedBaseAddress>
       <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86;$(SolutionDir)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dinput8.lib;Shell32.lib;freetype.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dinput8.lib;Shell32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Version>1.0</Version>
       <PreventDllBinding>false</PreventDllBinding>
       <AssemblyDebug>false</AssemblyDebug>
       <SetChecksum>true</SetChecksum>
-      <BaseAddress>
-      </BaseAddress>
+      <BaseAddress>0x25780000</BaseAddress>
       <FixedBaseAddress>
       </FixedBaseAddress>
       <MergeSections>
@@ -354,6 +353,7 @@
     <ClInclude Include="Helpers\LocalMirrorHook\DI8\DI8Types.h" />
     <ClInclude Include="Helpers\LocalMirrorHook\LocalMirrorHook.hpp" />
     <ClInclude Include="Helpers\LocalMirrorHook\VTableHook.hpp" />
+    <ClInclude Include="Helpers\Logger\Logger.hpp" />
     <ClInclude Include="Helpers\Memory\Memory.h" />
     <ClInclude Include="Helpers\ServerTalk\IServerTalk.hpp" />
     <ClInclude Include="Helpers\ServerTalk\Object\IServerTalkObject.hpp" />

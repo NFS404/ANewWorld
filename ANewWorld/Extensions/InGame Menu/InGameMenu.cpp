@@ -69,8 +69,8 @@ namespace Extensions {
             }
             ImGui::End();
 
-            if (Settings::settingsType.isFirstTimeUser) {
-               Settings::settingsType.isFirstTimeUser = false;
+            if (Settings::instance.isFirstTimeUser) {
+               Settings::instance.isFirstTimeUser = false;
                Settings::saveSettings();
             }
          }
@@ -78,6 +78,7 @@ namespace Extensions {
 
       void WINAPI beginScene(LPDIRECT3DDEVICE9 pDevice) {
          if (!isImguiInitialized) {
+            Log(LogLevel::Debug, "Setting up imgui");
             pImGuiIO = &ImGui::CreateContext()->IO;
             ImGui_ImplWin32_Init(Helpers::WndProcHook::windowHandle);
             ImGui_ImplDX9_Init(pDevice);
@@ -94,6 +95,7 @@ namespace Extensions {
                                        | ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_PickerHueWheel);
             ImGui::LoadStyle();
             isImguiInitialized = true;
+            Log(LogLevel::Debug, "Initialized imgui successfully.");
          }
 
          ImGui_ImplDX9_NewFrame();
@@ -257,7 +259,7 @@ namespace Extensions {
       }
 
       void Init() {
-         isFirstTimeUser = Settings::settingsType.isFirstTimeUser;
+         isFirstTimeUser = Settings::instance.isFirstTimeUser;
 
          LocalMirrorHook::D3D9::AddExtension(LocalMirrorHook::D3D9Extension::BeginScene, &beginScene);
          LocalMirrorHook::D3D9::AddExtension(LocalMirrorHook::D3D9Extension::EndScene, &endScene);

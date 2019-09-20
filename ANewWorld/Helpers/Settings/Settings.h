@@ -27,8 +27,10 @@
 #include "Type\SettingsType.hpp"
 
 namespace Settings {
-   extern SettingsType settingsType;
+   extern std::string  mainFolder;
+   extern SettingsType instance;
 
    bool loadSettings();
    bool saveSettings();
+   void Init();
 }

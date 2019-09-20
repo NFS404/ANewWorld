@@ -25,6 +25,7 @@
 
 #pragma once
 // Win32 targeting
+#define _WIN32_WINNT 0x600
 #include <SDKDDKVer.h>
 // Win32
 #define _CRT_SECURE_NO_WARNINGS
@@ -39,5 +40,6 @@
 #include <string>
 #include <vector>
 #include "Helpers\Memory\Memory.h"
+#include "Helpers\Logger\Logger.hpp"
 
 #define ExportedFunction comment(linker, "/EXPORT:" __FUNCTION__ "=" __FUNCDNAME__)

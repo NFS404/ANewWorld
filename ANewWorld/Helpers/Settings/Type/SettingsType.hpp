@@ -36,8 +36,8 @@ namespace Settings {
    public:
       SettingsType() = default;
 
-      bool isFirstTimeUser = true;
-
+      bool     isFirstTimeUser = true;
+      LogLevel logLevel        = LogLevel::Info;
       std::map<std::string, CameraPreset> cameraPresets ={};
    private:
       friend class cereal::access;
@@ -45,6 +45,7 @@ namespace Settings {
       void serialize(Archive& archive) {
          archive(
             CEREAL_NVP(isFirstTimeUser),
+            CEREAL_NVP(logLevel),
             cereal::make_nvp("CameraPresets", cameraPresets)
          );
       };

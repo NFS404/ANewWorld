@@ -26,13 +26,13 @@
 #pragma once
 #include "stdafx.h"
 #include "Extensions\Extensions.h"
-#include "d3dx9.h"
+#include <d3dx9.h>
 
 namespace Extensions {
    namespace InGameMenu {
       namespace Hooks::NewLoadingScreens {
-         inline bool isShowingLoadingScreen = false;
-         inline bool isLoadingEvent         = false;
+         static inline bool isShowingLoadingScreen = false;
+         static inline bool isLoadingEvent         = false;
          static void __declspec(naked) hkLoadingScreen_LoadScreen() {
             __asm {
                mov[Extensions::InGameMenu::hasUserSeenFirstLoadingScreen], 1
@@ -54,8 +54,8 @@ namespace Extensions {
             }
          }
 
-         inline uint32_t eventId = 0;
-         inline bool     needUpdateEventInfo = false;
+         static inline uint32_t eventId = 0;
+         static inline bool     needUpdateEventInfo = false;
          static void __declspec(naked) hkLaunchSinglePlayerRace() {
             __asm {
                add esp, 0x8
@@ -73,25 +73,25 @@ namespace Extensions {
 
       struct InternalEventDefinition {
          enum class EventMode : uint32_t {
-            kEventMode_Unknown = 0,
-            kEventMode_TollBooth = 1,
-            kEventMode_Canyon = 2,
-            kEventMode_Challenge = 3,
-            kEventMode_Circuit = 4,
-            kEventMode_Drift = 5,
+            kEventMode_Unknown         = 0,
+            kEventMode_TollBooth       = 1,
+            kEventMode_Canyon          = 2,
+            kEventMode_Challenge       = 3,
+            kEventMode_Circuit         = 4,
+            kEventMode_Drift           = 5,
             kEventMode_PursuitKnockOut = 6,
-            kEventMode_PursuitTag = 7,
-            kEventMode_SpeedTrap = 8,
-            kEventMode_Sprint = 9,
-            kEventMode_CanyonDrift = 10,
-            kEventMode_Pursuit = 12,
-            kEventMode_LapKnockOut = 15,
-            kEventMode_Drag = 19,
-            kEventMode_CoopPursuit = 21,
-            kEventMode_MeetingPlace = 22,
-            kEventMode_TeamPursuit = 23,
-            kEventMode_TeamEscape = 24,
-            kEventMode_TreasureHunt = 25
+            kEventMode_PursuitTag      = 7,
+            kEventMode_SpeedTrap       = 8,
+            kEventMode_Sprint          = 9,
+            kEventMode_CanyonDrift     = 10,
+            kEventMode_Pursuit         = 12,
+            kEventMode_LapKnockOut     = 15,
+            kEventMode_Drag            = 19,
+            kEventMode_CoopPursuit     = 21,
+            kEventMode_MeetingPlace    = 22,
+            kEventMode_TeamPursuit     = 23,
+            kEventMode_TeamEscape      = 24,
+            kEventMode_TreasureHunt    = 25
          };
          struct Name {
             const char* pName;
@@ -129,73 +129,118 @@ namespace Extensions {
          //void* LockedReason;
          //void* Traffic;
       };
-
-      struct NewLoadingScreens : _BaseInGameMenuItem {
+      class NewLoadingScreens : public _BaseInGameMenuItem {
          struct LoadingScreenTextures {
-            static inline std::string dirUIAssets = "ANewWorld\\UI\\LOADING\\";
             struct BackgroundsByRatios {
-               LPDIRECT3DTEXTURE9
-                  _3by2, _4by3, _5by4,
-                  _16by9, _16by10,
-                  _21by9, _32by9,
-                  _683by358;
+               LPDIRECT3DTEXTURE9 _3by2     = nullptr;
+               LPDIRECT3DTEXTURE9 _4by3     = nullptr;
+               LPDIRECT3DTEXTURE9 _5by4     = nullptr;
+               LPDIRECT3DTEXTURE9 _16by9    = nullptr;
+               LPDIRECT3DTEXTURE9 _16by10   = nullptr;
+               LPDIRECT3DTEXTURE9 _21by9    = nullptr;
+               LPDIRECT3DTEXTURE9 _32by9    = nullptr;
+               LPDIRECT3DTEXTURE9 _683by358 = nullptr;
             };
             struct LoadingTitleBackgrounds {
-               LPDIRECT3DTEXTURE9 circuit, sprint, drag, meet, teamescape, pursuit;
+               LPDIRECT3DTEXTURE9 circuit    = nullptr;
+               LPDIRECT3DTEXTURE9 sprint     = nullptr;
+               LPDIRECT3DTEXTURE9 drag       = nullptr;
+               LPDIRECT3DTEXTURE9 meet       = nullptr;
+               LPDIRECT3DTEXTURE9 teamescape = nullptr;
+               LPDIRECT3DTEXTURE9 pursuit    = nullptr;
             };
             struct LoadingCircleTypes {
-               LPDIRECT3DTEXTURE9 default, meet, pursuit;
+               LPDIRECT3DTEXTURE9 default = nullptr;
+               LPDIRECT3DTEXTURE9 meet    = nullptr;
+               LPDIRECT3DTEXTURE9 pursuit = nullptr;
             };
 
-            BackgroundsByRatios     backgrounds;
-            LoadingTitleBackgrounds loadingTitleBackgrounds;
-            LoadingCircleTypes      loadingCircles;
+            BackgroundsByRatios     backgrounds             ={ 0 };
+            LoadingTitleBackgrounds loadingTitleBackgrounds ={ 0 };
+            LoadingCircleTypes      loadingCircles          ={ 0 };
 
+            bool hasLoadedTextures = false;
             void createTextures() {
-               auto pDevice = LocalMirrorHook::D3D9::GetD3D9Device();
+               Log(LogLevel::Debug, "Creating textures.");
+               HRESULT           res;
+               LPDIRECT3DDEVICE9 pDevice     = LocalMirrorHook::D3D9::GetD3D9Device();
+               std::string       dirUIAssets = Settings::mainFolder + "UI\\LOADING\\";
+
+               Log(LogLevel::Debug, Logger::FormatString("UI Assets folder: %s", dirUIAssets.c_str()));
                // Backgrounds
+               Log(LogLevel::Debug, "Creating background textures");
                {
-                  D3DXCreateTextureFromFile(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_3by2.png").c_str(), &backgrounds._3by2);
-                  D3DXCreateTextureFromFile(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_4by3.png").c_str(), &backgrounds._4by3);
-                  D3DXCreateTextureFromFile(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_5by4.png").c_str(), &backgrounds._5by4);
-                  D3DXCreateTextureFromFile(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_16by9.png").c_str(), &backgrounds._16by9);
-                  D3DXCreateTextureFromFile(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_16by10.png").c_str(), &backgrounds._16by10);
-                  D3DXCreateTextureFromFile(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_21by9.png").c_str(), &backgrounds._21by9);
-                  D3DXCreateTextureFromFile(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_32by9.png").c_str(), &backgrounds._32by9);
-                  D3DXCreateTextureFromFile(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_683by358.png").c_str(), &backgrounds._683by358);
+                  if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_3by2.png").c_str(), &backgrounds._3by2)))
+                     Log(LogLevel::Error, "Creation of 3:2 background failed with: %u", res);
+                  if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_4by3.png").c_str(), &backgrounds._4by3)))
+                     Log(LogLevel::Error, "Creation of 4:3 background failed with: %u", res);
+                  if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_5by4.png").c_str(), &backgrounds._5by4)))
+                     Log(LogLevel::Error, "Creation of 5:4 background failed with: %u", res);
+                  if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_16by9.png").c_str(), &backgrounds._16by9)))
+                     Log(LogLevel::Error, "Creation of 16:9 background failed with: %u", res);
+                  if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_16by10.png").c_str(), &backgrounds._16by10)))
+                     Log(LogLevel::Error, "Creation of 16:10 background failed with: %u", res);
+                  if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_21by9.png").c_str(), &backgrounds._21by9)))
+                     Log(LogLevel::Error, "Creation of 21:9 background failed with: %u", res);
+                  if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_32by9.png").c_str(), &backgrounds._32by9)))
+                     Log(LogLevel::Error, "Creation of 32:9 background failed with: %u", res);
+                  if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_683by358.png").c_str(), &backgrounds._683by358)))
+                     Log(LogLevel::Error, "Creation of 683:358 background failed with: %u", res);
                }
                // Loading title backgrounds
+               Log(LogLevel::Debug, "Creating loading title background textures");
                {
-                  D3DXCreateTextureFromFile(pDevice, (dirUIAssets + "DEFAULT\\TITLE\\UI_LOADING_TITLE_BACKGROUND_CIRCUIT.png").c_str(), &loadingTitleBackgrounds.circuit);
-                  D3DXCreateTextureFromFile(pDevice, (dirUIAssets + "DEFAULT\\TITLE\\UI_LOADING_TITLE_BACKGROUND_SPRINT.png").c_str(), &loadingTitleBackgrounds.sprint);
-                  D3DXCreateTextureFromFile(pDevice, (dirUIAssets + "DEFAULT\\TITLE\\UI_LOADING_TITLE_BACKGROUND_DRAG.png").c_str(), &loadingTitleBackgrounds.drag);
-                  D3DXCreateTextureFromFile(pDevice, (dirUIAssets + "MEET\\TITLE\\UI_LOADING_TITLE_BACKGROUND.png").c_str(), &loadingTitleBackgrounds.meet);
-                  D3DXCreateTextureFromFile(pDevice, (dirUIAssets + "PURSUIT\\TITLE\\UI_LOADING_TITLE_BACKGROUND_ESCAPE.png").c_str(), &loadingTitleBackgrounds.teamescape);
-                  D3DXCreateTextureFromFile(pDevice, (dirUIAssets + "PURSUIT\\TITLE\\UI_LOADING_TITLE_BACKGROUND_PURSUIT.png").c_str(), &loadingTitleBackgrounds.pursuit);
+                  if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "DEFAULT\\TITLE\\UI_LOADING_TITLE_BACKGROUND_CIRCUIT.png").c_str(), &loadingTitleBackgrounds.circuit)))
+                     Log(LogLevel::Error, "Creation of circuit title background failed with: %u", res);
+                  if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "DEFAULT\\TITLE\\UI_LOADING_TITLE_BACKGROUND_SPRINT.png").c_str(), &loadingTitleBackgrounds.sprint)))
+                     Log(LogLevel::Error, "Creation of sprint title background failed with: %u", res);
+                  if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "DEFAULT\\TITLE\\UI_LOADING_TITLE_BACKGROUND_DRAG.png").c_str(), &loadingTitleBackgrounds.drag)))
+                     Log(LogLevel::Error, "Creation of drag title background failed with: %u", res);
+                  if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "MEET\\TITLE\\UI_LOADING_TITLE_BACKGROUND.png").c_str(), &loadingTitleBackgrounds.meet)))
+                     Log(LogLevel::Error, "Creation of meeting place title background failed with: %u", res);
+                  if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "PURSUIT\\TITLE\\UI_LOADING_TITLE_BACKGROUND_ESCAPE.png").c_str(), &loadingTitleBackgrounds.teamescape)))
+                     Log(LogLevel::Error, "Creation of team escape title background failed with: %u", res);
+                  if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "PURSUIT\\TITLE\\UI_LOADING_TITLE_BACKGROUND_PURSUIT.png").c_str(), &loadingTitleBackgrounds.pursuit)))
+                     Log(LogLevel::Error, "Creation of pursuit title background failed with: %u", res);
                }
                // Loading circles
+               Log(LogLevel::Debug, "Creating loading circle textures");
                {
-                  D3DXCreateTextureFromFile(pDevice, (dirUIAssets + "DEFAULT\\UI_LOADING_CIRCLE.png").c_str(), &loadingCircles.default);
-                  D3DXCreateTextureFromFile(pDevice, (dirUIAssets + "MEET\\UI_LOADING_CIRCLE.png").c_str(), &loadingCircles.meet);
-                  D3DXCreateTextureFromFile(pDevice, (dirUIAssets + "PURSUIT\\UI_LOADING_CIRCLE.png").c_str(), &loadingCircles.pursuit);
+                  if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "DEFAULT\\UI_LOADING_CIRCLE.png").c_str(), &loadingCircles.default)))
+                     Log(LogLevel::Error, "Creation of default loading circle failed with: %u", res);
+                  if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "MEET\\UI_LOADING_CIRCLE.png").c_str(), &loadingCircles.meet)))
+                     Log(LogLevel::Error, "Creation of meeting place loading circle failed with: %u", res);
+                  if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "PURSUIT\\UI_LOADING_CIRCLE.png").c_str(), &loadingCircles.pursuit)))
+                     Log(LogLevel::Error, "Creation of pursuit loading circle failed with: %u", res);
                }
-
+               Log(LogLevel::Debug, "Created textures successfully.");
+               hasLoadedTextures = true;
             }
          };
+         static inline DWORD WINAPI _threadedCreateTextures(LPVOID pClassInstance) {
+            auto* pClass = reinterpret_cast<LoadingScreenTextures*>(pClassInstance);
+            pClass->createTextures();
+            return TRUE;
+         }
+
          LoadingScreenTextures textures ={};
 
+      public:
          const virtual void loadData() override {
+            Log(LogLevel::Debug, "Loading data.");
             Memory::writeCall(0x897A6, (DWORD)&Hooks::NewLoadingScreens::hkLoadingScreen_LoadScreen, false);
             Memory::writeJMP(0x896FE, (DWORD)&Hooks::NewLoadingScreens::hkLoadingScreen_UnloadScreen, false);
             Memory::writeJMP(0xBA3F6, (DWORD)&Hooks::NewLoadingScreens::hkLaunchSinglePlayerRace, false);
 
-            textures.createTextures();
+            CreateThread(NULL, 0, &_threadedCreateTextures, &textures, 0, NULL);
             hasLoadedData = true;
          }
 
          const virtual void onFrame() override {
-            static float collectiveDeltaTime = 0.0f;
+            if (!textures.hasLoadedTextures)
+               return;
 
+            static float collectiveDeltaTime = 0.0f;
             if (Hooks::NewLoadingScreens::isShowingLoadingScreen) {
                static InternalEventDefinition eventInfo ={};
                if (Hooks::NewLoadingScreens::needUpdateEventInfo) {

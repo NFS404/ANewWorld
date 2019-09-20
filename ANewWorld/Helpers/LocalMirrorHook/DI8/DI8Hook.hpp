@@ -33,12 +33,12 @@ using std::unique_ptr;
 using std::make_unique;
 
 namespace LocalMirrorHook {
-   enum class DI8Device {
-      Keyboard,
-      Mouse
+   enum class DI8Device : uint32_t {
+      Keyboard = 0,
+      Mouse    = 1
    };
-   enum class DI8Extension {
-      GetDeviceState
+   enum class DI8Extension : uint32_t {
+      GetDeviceState = 0
    };
 
    namespace DI8 {
@@ -90,6 +90,7 @@ namespace LocalMirrorHook {
 
    #pragma region helpers
       static HRESULT AddExtension(DI8Device deviceType, DI8Extension extensionType, LPVOID extensionAddress) {
+         Log(LogLevel::Debug, Logger::FormatString("Adding DI8 extension (type %u) for device type-%u from %p.", extensionType, deviceType, extensionAddress));
          switch (extensionType) {
             case DI8Extension::GetDeviceState:
             {
@@ -115,6 +116,7 @@ namespace LocalMirrorHook {
             static bool mouseCaptured    = false;
 
             if (deviceType == DI8DEVTYPE_KEYBOARD && !keyboardCaptured) {
+               Log(LogLevel::Debug, "KeyboardA detected.");
                lpdi8->CreateDevice(lpddi->guidInstance, &device, NULL);
                inputTable = *(PDWORD*)device;
                origGetDeviceStateA_Keyboard = (GetDeviceState_t)(DWORD)inputTable[9];
@@ -122,9 +124,11 @@ namespace LocalMirrorHook {
                Memory::openMemoryAccess(inputTable[9], 4);
                inputTable[9] = (DWORD)hkGetDeviceStateA_Keyboard;
                Memory::restoreMemoryAccess();
+               Log(LogLevel::Debug, "KeyboardA captured.");
                keyboardCaptured = true;
             }
             if (deviceType == DI8DEVTYPE_MOUSE && !mouseCaptured) {
+               Log(LogLevel::Debug, "MouseA detected.");
                lpdi8->CreateDevice(lpddi->guidInstance, &device, NULL);
                inputTable = *(PDWORD*)device;
                origGetDeviceStateA_Mouse = (GetDeviceState_t)(DWORD)inputTable[9];
@@ -132,6 +136,7 @@ namespace LocalMirrorHook {
                Memory::openMemoryAccess(inputTable[9], 4);
                inputTable[9] = (DWORD)hkGetDeviceStateA_Mouse;
                Memory::restoreMemoryAccess();
+               Log(LogLevel::Debug, "MouseA captured.");
                mouseCaptured = true;
             }
             if (keyboardCaptured && mouseCaptured)
@@ -150,6 +155,8 @@ namespace LocalMirrorHook {
             static bool mouseCaptured    = false;
 
             if (deviceType == DI8DEVTYPE_KEYBOARD && !keyboardCaptured) {
+               Log(LogLevel::Debug, "KeyboardW detected.");
+
                lpdi8->CreateDevice(lpddi->guidInstance, &device, NULL);
                inputTable = *(PDWORD*)device;
                origGetDeviceStateW_Keyboard = (GetDeviceState_t)(DWORD)inputTable[9];
@@ -157,9 +164,11 @@ namespace LocalMirrorHook {
                Memory::openMemoryAccess(inputTable[9], 4);
                inputTable[9] = (DWORD)hkGetDeviceStateW_Keyboard;
                Memory::restoreMemoryAccess();
+               Log(LogLevel::Debug, "KeyboardW captured.");
                keyboardCaptured = true;
             }
             if (deviceType == DI8DEVTYPE_MOUSE && !mouseCaptured) {
+               Log(LogLevel::Debug, "MouseW detected.");
                lpdi8->CreateDevice(lpddi->guidInstance, &device, NULL);
                inputTable = *(PDWORD*)device;
                origGetDeviceStateW_Mouse = (GetDeviceState_t)(DWORD)inputTable[9];
@@ -167,6 +176,7 @@ namespace LocalMirrorHook {
                Memory::openMemoryAccess(inputTable[9], 4);
                inputTable[9] = (DWORD)hkGetDeviceStateW_Mouse;
                Memory::restoreMemoryAccess();
+               Log(LogLevel::Debug, "MouseW captured.");
                mouseCaptured = true;
             }
             if (keyboardCaptured && mouseCaptured)
@@ -207,12 +217,14 @@ namespace LocalMirrorHook {
       }
 
       static void Init() {
+         Log(LogLevel::Debug, "Setting up DI8 hook.");
          mGetDeviceStateExtensions[DI8Device::Keyboard] = std::vector<GetDeviceState_t>();
          mGetDeviceStateExtensions[DI8Device::Mouse]    = std::vector<GetDeviceState_t>();
 
          origCallW += Memory::baseAddress;
          Memory::writeCall(0x597ECE, (DWORD)&hkDirectInput8ACreate, false);
          Memory::writeCall(0x3C6387, (DWORD)&hkDirectInput8WCreate, false);
+         Log(LogLevel::Debug, "Hooks installed successfully.");
       }
    }
 }

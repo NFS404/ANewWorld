@@ -34,6 +34,7 @@ namespace Helpers {
       std::vector<WNDPROC> extensions   = std::vector<WNDPROC>();
 
       void addExtension(LPVOID extensionAddress) {
+         Log(LogLevel::Debug, Logger::FormatString("Adding WndProc extension from %p.", extensionAddress));
          extensions.push_back(reinterpret_cast<WNDPROC>(extensionAddress));
       }
 
@@ -56,11 +57,14 @@ namespace Helpers {
       }
 
       void Init() {
+         Log(LogLevel::Debug, "Waiting for window handle..");
          while (!windowHandle) {
             windowHandle = LocalMirrorHook::D3D9::GetWindowHandle();
             Sleep(1000);
          }
+         Log(LogLevel::Debug, "Installing WndProc hook.");
          origWndProc = (WNDPROC)SetWindowLongPtrA(windowHandle, GWL_WNDPROC, (LONG_PTR)&hkWndProc);
+         Log(LogLevel::Debug, "Installed WndProc hook successfully.");
       }
    }
 }

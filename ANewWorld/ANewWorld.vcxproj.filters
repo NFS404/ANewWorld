@@ -94,6 +94,9 @@
     <Filter Include="Helpers\LocalMirrorHook\DI8">
       <UniqueIdentifier>{32943d4c-46b6-48d8-b4db-7899a29deb21}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Helpers\Logger">
+      <UniqueIdentifier>{07ecd832-b898-471b-b3c3-a3a8c225c546}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Extensions\Extensions.h">
@@ -398,6 +401,9 @@
     </ClInclude>
     <ClInclude Include="Helpers\imgui\imgui_freetype.h">
       <Filter>Helpers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Logger\Logger.hpp">
+      <Filter>Helpers\Logger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

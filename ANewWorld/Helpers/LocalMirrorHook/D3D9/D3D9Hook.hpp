@@ -33,11 +33,11 @@ using std::unique_ptr;
 using std::make_unique;
 
 namespace LocalMirrorHook {
-   enum class D3D9Extension {
-      BeginScene,
-      EndScene,
-      BeforeReset,
-      AfterReset
+   enum class D3D9Extension : uint32_t {
+      BeginScene  = 0,
+      EndScene    = 1,
+      BeforeReset = 2,
+      AfterReset  = 3
    };
 
    namespace D3D9 {
@@ -105,6 +105,7 @@ namespace LocalMirrorHook {
 
    #pragma region helpers
       static HRESULT AddExtension(D3D9Extension extensionType, LPVOID extensionAddress) {
+         Log(LogLevel::Debug, Logger::FormatString("Adding D3D9 extension (type %u) from %p.", extensionType, extensionAddress));
          switch (extensionType) {
             case D3D9Extension::BeginScene:
                vBeginSceneExtensions.push_back(reinterpret_cast<BeginScene_t>(extensionAddress));
@@ -141,6 +142,7 @@ namespace LocalMirrorHook {
    #pragma endregion
 
       static void Init() {
+         Log(LogLevel::Debug, "Setting up D3D9 hook.");
          d3dDeviceAddress = Memory::makeAbsolute(0x9064A8);
 
          DWORD pD3DDevice = NULL;
@@ -148,6 +150,7 @@ namespace LocalMirrorHook {
             pD3DDevice = *(DWORD*)d3dDeviceAddress;
             Sleep(1000);
          }
+         Log(LogLevel::Debug, "Found the D3D9 device.");
          d3dDevice = (LPDIRECT3DDEVICE9)pD3DDevice;
 
          D3DDEVICE_CREATION_PARAMETERS cParams;
@@ -160,6 +163,7 @@ namespace LocalMirrorHook {
          origEndScene             = d3dDeviceHook->Hook(42, hkEndScene);
          origBeginStateBlock      = d3dDeviceHook->Hook(60, hkBeginStateBlock);
 
+         Log(LogLevel::Debug, "Hooks installed successfully.");
          isExtenderReady = true;
       }
    }

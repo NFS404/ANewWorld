@@ -64,9 +64,9 @@ public:
 
          // port
          if (hostEnd != uriEnd && hostEnd[0] == ':') {
-            auto dummy = hostEnd;
+            auto dummy = hostEnd + 1;
             auto portEnd = pathStart != uriEnd ? pathStart : uriEnd;
-            port = std::stoi(std::string(++dummy, portEnd));
+            port = std::stoi(std::string(dummy, portEnd));
          }
 
          SetBaseUrl(std::string(uriBegin, hostEnd) + std::string(pathStart, uriEnd));
@@ -78,6 +78,7 @@ public:
       this->userID = userID;
    }
    void setHttpCli() {
+      Log(LogLevel::Debug, Logger::FormatString("Setting httpCli to %s (port %d)", GetBaseUrl(), port));
       httpCli.reset();
       httpCli = std::make_unique<httplib::Client>(GetBaseUrl().c_str(), port);
    }

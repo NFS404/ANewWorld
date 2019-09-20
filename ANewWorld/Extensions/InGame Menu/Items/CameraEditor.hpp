@@ -141,8 +141,8 @@ namespace Extensions
 
                      if (!pActiveCameraEditorData->hasLoadedSettings) {
                         std::string activeCameraName = pActiveCameraInfo->CollectionName;
-                        auto iter = Settings::settingsType.cameraPresets.find(activeCameraName);
-                        if (iter != Settings::settingsType.cameraPresets.end()) {
+                        auto iter = Settings::instance.cameraPresets.find(activeCameraName);
+                        if (iter != Settings::instance.cameraPresets.end()) {
                            auto* pActiveCameraPreset = &iter->second;
                            pActiveCameraPreset->InfoPreset.copyDataToGameInternalsCompliantPointer(pActiveCameraInfo);
                            pActiveCameraEditorData->joyViewEnabled     = pActiveCameraPreset->JoyViewEnabled;
@@ -267,7 +267,7 @@ namespace Extensions
                   ImGui::Checkbox("Advanced options", &pActiveCameraEditorData->showAdvancedOptions);
                   ImGui::SameLine(); ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical); ImGui::SameLine();
                   if (ImGui::Button("Save Preset")) {
-                     auto* pCameraPreset = &Settings::settingsType.cameraPresets[std::string(pActiveCameraInfo->CollectionName)];
+                     auto* pCameraPreset = &Settings::instance.cameraPresets[std::string(pActiveCameraInfo->CollectionName)];
                      pCameraPreset->InfoPreset.setTo(pActiveCameraInfo);
                      pCameraPreset->JoyViewEnabled     = pActiveCameraEditorData->joyViewEnabled;
                      pCameraPreset->SpeedFOVEnabled    = pActiveCameraEditorData->speedFOVEnabled;
