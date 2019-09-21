@@ -78,7 +78,7 @@ namespace Extensions {
 
       void WINAPI beginScene(LPDIRECT3DDEVICE9 pDevice) {
          if (!isImguiInitialized) {
-            Log(LogLevel::Debug, "Setting up imgui");
+            Log(LogLevel::Info, "Setting up imgui.");
             pImGuiIO = &ImGui::CreateContext()->IO;
             ImGui_ImplWin32_Init(Helpers::WndProcHook::windowHandle);
             ImGui_ImplDX9_Init(pDevice);
@@ -95,7 +95,6 @@ namespace Extensions {
                                        | ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_PickerHueWheel);
             ImGui::LoadStyle();
             isImguiInitialized = true;
-            Log(LogLevel::Debug, "Initialized imgui successfully.");
          }
 
          ImGui_ImplDX9_NewFrame();

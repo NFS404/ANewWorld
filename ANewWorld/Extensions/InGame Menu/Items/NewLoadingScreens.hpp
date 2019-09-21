@@ -161,14 +161,14 @@ namespace Extensions {
 
             bool hasLoadedTextures = false;
             void createTextures() {
-               Log(LogLevel::Debug, "Creating textures.");
+               Log(LogLevel::Info, "Creating textures");
                HRESULT           res;
                LPDIRECT3DDEVICE9 pDevice     = LocalMirrorHook::D3D9::GetD3D9Device();
                std::string       dirUIAssets = Settings::mainFolder + "UI\\LOADING\\";
 
                Log(LogLevel::Debug, Logger::FormatString("UI Assets folder: %s", dirUIAssets.c_str()));
                // Backgrounds
-               Log(LogLevel::Debug, "Creating background textures");
+               Log(LogLevel::Info, "Creating background textures");
                {
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_3by2.png").c_str(), &backgrounds._3by2)))
                      Log(LogLevel::Error, "Creation of 3:2 background failed with: %u", res);
@@ -188,7 +188,7 @@ namespace Extensions {
                      Log(LogLevel::Error, "Creation of 683:358 background failed with: %u", res);
                }
                // Loading title backgrounds
-               Log(LogLevel::Debug, "Creating loading title background textures");
+               Log(LogLevel::Info, "Creating loading title background textures");
                {
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "DEFAULT\\TITLE\\UI_LOADING_TITLE_BACKGROUND_CIRCUIT.png").c_str(), &loadingTitleBackgrounds.circuit)))
                      Log(LogLevel::Error, "Creation of circuit title background failed with: %u", res);
@@ -204,7 +204,7 @@ namespace Extensions {
                      Log(LogLevel::Error, "Creation of pursuit title background failed with: %u", res);
                }
                // Loading circles
-               Log(LogLevel::Debug, "Creating loading circle textures");
+               Log(LogLevel::Info, "Creating loading circle textures");
                {
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "DEFAULT\\UI_LOADING_CIRCLE.png").c_str(), &loadingCircles.default)))
                      Log(LogLevel::Error, "Creation of default loading circle failed with: %u", res);
@@ -213,7 +213,6 @@ namespace Extensions {
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "PURSUIT\\UI_LOADING_CIRCLE.png").c_str(), &loadingCircles.pursuit)))
                      Log(LogLevel::Error, "Creation of pursuit loading circle failed with: %u", res);
                }
-               Log(LogLevel::Debug, "Created textures successfully.");
                hasLoadedTextures = true;
             }
          };
@@ -227,7 +226,7 @@ namespace Extensions {
 
       public:
          const virtual void loadData() override {
-            Log(LogLevel::Debug, "Loading data.");
+            Log(LogLevel::Debug, "Installing hooks.");
             Memory::writeCall(0x897A6, (DWORD)&Hooks::NewLoadingScreens::hkLoadingScreen_LoadScreen, false);
             Memory::writeJMP(0x896FE, (DWORD)&Hooks::NewLoadingScreens::hkLoadingScreen_UnloadScreen, false);
             Memory::writeJMP(0xBA3F6, (DWORD)&Hooks::NewLoadingScreens::hkLaunchSinglePlayerRace, false);

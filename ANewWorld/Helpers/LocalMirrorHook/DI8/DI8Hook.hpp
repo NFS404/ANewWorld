@@ -224,7 +224,6 @@ namespace LocalMirrorHook {
          origCallW += Memory::baseAddress;
          Memory::writeCall(0x597ECE, (DWORD)&hkDirectInput8ACreate, false);
          Memory::writeCall(0x3C6387, (DWORD)&hkDirectInput8WCreate, false);
-         Log(LogLevel::Debug, "Hooks installed successfully.");
       }
    }
 }

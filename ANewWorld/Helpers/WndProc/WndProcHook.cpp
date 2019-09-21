@@ -57,14 +57,13 @@ namespace Helpers {
       }
 
       void Init() {
-         Log(LogLevel::Debug, "Waiting for window handle..");
+         Log(LogLevel::Debug, "Waiting for the window handle...");
          while (!windowHandle) {
             windowHandle = LocalMirrorHook::D3D9::GetWindowHandle();
             Sleep(1000);
          }
-         Log(LogLevel::Debug, "Installing WndProc hook.");
+         Log(LogLevel::Info, "Installing WndProc hook.");
          origWndProc = (WNDPROC)SetWindowLongPtrA(windowHandle, GWL_WNDPROC, (LONG_PTR)&hkWndProc);
-         Log(LogLevel::Debug, "Hook installed successfully.");
       }
    }
 }

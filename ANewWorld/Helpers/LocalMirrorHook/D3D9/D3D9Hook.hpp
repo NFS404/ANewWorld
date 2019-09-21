@@ -142,7 +142,7 @@ namespace LocalMirrorHook {
    #pragma endregion
 
       static void Init() {
-         Log(LogLevel::Debug, "Setting up D3D9 hook.");
+         Log(LogLevel::Info, "Setting up D3D9 hook.");
          d3dDeviceAddress = Memory::makeAbsolute(0x9064A8);
 
          DWORD pD3DDevice = NULL;
@@ -150,7 +150,7 @@ namespace LocalMirrorHook {
             pD3DDevice = *(DWORD*)d3dDeviceAddress;
             Sleep(1000);
          }
-         Log(LogLevel::Debug, "Found the D3D9 device.");
+         Log(LogLevel::Debug, Logger::FormatString("Found the D3D9 device at 0x%p.", pD3DDevice));
          d3dDevice = (LPDIRECT3DDEVICE9)pD3DDevice;
 
          D3DDEVICE_CREATION_PARAMETERS cParams;
@@ -163,7 +163,6 @@ namespace LocalMirrorHook {
          origEndScene             = d3dDeviceHook->Hook(42, hkEndScene);
          origBeginStateBlock      = d3dDeviceHook->Hook(60, hkBeginStateBlock);
 
-         Log(LogLevel::Debug, "Hooks installed successfully.");
          isExtenderReady = true;
       }
    }

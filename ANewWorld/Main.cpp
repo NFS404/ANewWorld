@@ -49,13 +49,13 @@ namespace TemporaryHelper {
    }
 
    void WINAPI hkOutputDebugStringA(LPCSTR lpOutputString) {
-      printf((std::string("[PASS_THROUGH] OutputDebugStringA: ") + std::string(lpOutputString) + '\n').c_str());
+      printf("[PASS_THROUGH] OutputDebugStringA: %s\n", lpOutputString);
    }
    void WINAPI hkOutputDebugStringW(LPCWSTR lpOutputString) {
-      wprintf((std::wstring(L"[PASS_THROUGH] OutputDebugStringW: ") + std::wstring(lpOutputString) + L'\n').c_str());
+      wprintf(L"[PASS_THROUGH] OutputDebugStringW: %ws\n", lpOutputString);
    }
    void __cdecl hkPassThrough_fputs(const char* Str, FILE* File) {
-      printf((std::string("[PASS_THROUGH] fputs: ") + std::string(Str) + '\n').c_str());
+      printf("[PASS_THROUGH] fputs: %s\n", Str);
       fputs(Str, File);
    }
 }
@@ -79,6 +79,7 @@ DWORD WINAPI Init(LPVOID) {
    int32_t nArgs;
    LPWSTR* szArgList = CommandLineToArgvW(GetCommandLineW(), &nArgs);
    if (nArgs < 5) {
+      Log(LogLevel::Error, "Invalid command line!");
       MessageBoxA(nullptr, "Invalid command line. Report this to a developer.", "Error", MB_ICONERROR);
       exit(-1);
    }

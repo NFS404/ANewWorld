@@ -39,9 +39,9 @@ namespace Settings {
 
    bool loadSettings() {
       try {
-         Log(LogLevel::Debug, "Loading settings file.");
+         Log(LogLevel::Info, "Loading settings file.");
          if (!std::filesystem::exists(settingsFile)) {
-            Log(LogLevel::Debug, "Settings file was not found, creating new.");
+            Log(LogLevel::Warning, "Settings file was not found, creating a new one!");
             saveSettings();
             return true;
          }
@@ -53,13 +53,12 @@ namespace Settings {
          MessageBox(NULL, e.what(), "Error during loading settings.", MB_ICONERROR | MB_OK);
          return false;
       }
-      Log(LogLevel::Debug, "Loaded settings file successfully.");
       return true;
    }
 
    bool saveSettings() {
       try {
-         Log(LogLevel::Debug, "Saving settings file.");
+         Log(LogLevel::Info, "Saving settings file.");
          std::filesystem::create_directories(mainFolder);
 
          std::ofstream ofs(settingsFile);
@@ -70,7 +69,6 @@ namespace Settings {
          MessageBox(NULL, e.what(), "Error during saving settings.", MB_ICONERROR | MB_OK);
          return false;
       }
-      Log(LogLevel::Debug, "Saved settings file successfully.");
       return true;
    }
 
@@ -81,7 +79,7 @@ namespace Settings {
 
       mainFolder   = path.parent_path().u8string() + "\\ANewWorld\\";
       settingsFile = mainFolder + "ANewWorld.xml";
-      Log(LogLevel::Debug, Logger::FormatString("Settings initialized successfuly. Target file: \"%s.\"", settingsFile.c_str()));
+      Log(LogLevel::Debug, Logger::FormatString("Settings target file: \"%s.\"", settingsFile.c_str()));
       loadSettings();
    }
 }
