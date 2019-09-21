@@ -78,7 +78,7 @@ public:
       this->userID = userID;
    }
    void setHttpCli() {
-      Log(LogLevel::Debug, Logger::FormatString("Setting httpCli to %s (port %d)", GetBaseUrl(), port));
+      Log(LogLevel::Debug, Logger::FormatString("Setting httpCli to %s (port %d)", GetBaseUrl().c_str(), port));
       httpCli.reset();
       httpCli = std::make_unique<httplib::Client>(GetBaseUrl().c_str(), port);
    }
