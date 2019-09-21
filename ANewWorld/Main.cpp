@@ -68,7 +68,7 @@ namespace TemporaryHelper {
 DWORD WINAPI Init(LPVOID) {
    Settings::Init();
    Logger::currentLogLevel = Settings::instance.logLevel;
-   if (Settings::instance.logLevel == LogLevel::Debug) {
+   if (Settings::instance.logLevel == LogLevel::DebugConsole) {
       AllocConsole();
       freopen("CONOUT$", "w", stdout);
    } else {

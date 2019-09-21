@@ -30,10 +30,11 @@
 #include <iomanip> // put_time
 
 enum class LogLevel : uint32_t {
-   Debug   = 0,
-   Info    = 1,
-   Warning = 2,
-   Error   = 3
+   DebugConsole = 0,
+   Debug        = 1,
+   Info         = 2,
+   Warning      = 3,
+   Error        = 4
 };
 
 namespace Logger {
