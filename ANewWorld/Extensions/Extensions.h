@@ -24,11 +24,6 @@
 */
 
 #pragma once
-// InGameMenu
-#include <d3d9.h>
-#include "InGame Menu\Items\_BaseInGameMenuItem.hpp"
-// DirectInput8
-#include <dinput.h>
 // Helpers
 #include "Helpers\Settings\Settings.h"
 #include "Helpers\Game Internals\GameInternals.h"
@@ -36,13 +31,12 @@
 #include "Helpers\WndProc\WndProcHook.h"
 // ImGui
 #include "Helpers\imgui\imgui.h"
-// ImGui::VerticalSeparator
-#include "Helpers\imgui\imgui_internal.h"
+#include "Helpers\imgui\imgui_internal.h" // ImGui::SeparatorEx
 
 namespace Extensions {
    extern ImGuiIO* pImGuiIO; // defined in InGameMenu.cpp
 
-   namespace RockportEdControls {
+   namespace ImGuiEx {
       typedef std::function<bool(const char*)> CreatePresetCallback;
       typedef std::function<bool(LPVOID*, const char**)> LoadPresetCallback;
       typedef std::function<bool(void)> UpdateActivePresetCallback;
@@ -70,8 +64,7 @@ namespace Extensions {
             const CreatePresetCallback& in_createPresetCallback, const LoadPresetCallback& in_loadPresetCallBack,
             const UpdateActivePresetCallback& in_updateActivePresetCallback, const DeletePresetCallback& in_deletePresetCallback,
             const ListPresetsFn& in_listPresetsFn,
-            LPVOID* in_ppActivePresetVariable, const char** in_ppActivePresetNameVariable)
-         {
+            LPVOID* in_ppActivePresetVariable, const char** in_ppActivePresetNameVariable) {
             ppActivePreset     = in_ppActivePresetVariable;
             ppActivePresetName = in_ppActivePresetNameVariable;
 
@@ -83,12 +76,11 @@ namespace Extensions {
          }
 
          void Draw() {
-            if (ImGui::BeginChild("##Presets", ImVec2(0.0f, 92.0f), true))
-            {
+            if (ImGui::BeginChild("##Presets", ImVec2(0.0f, 92.0f), true)) {
                if (ImGui::Button("Create preset"))
                   ImGui::OpenPopup("##CreatePresetPopup");
                if (ImGui::BeginPopup("##CreatePresetPopup", ImGuiWindowFlags_AlwaysAutoResize)) {
-                  static char presetName[64] = { 0 };
+                  static char presetName[64] ={ 0 };
                   ImGui::Text("Preset name: "); ImGui::SameLine();
                   ImGui::InputText("##PresetName", presetName, sizeof(presetName), ImGuiInputTextFlags_CallbackCharFilter, ImGui::ExAlphaNumericFilter);
 
@@ -108,8 +100,8 @@ namespace Extensions {
                   ImGui::EndPopup();
                }
                if (hasLoadedAPreset && *ppActivePreset && *ppActivePresetName) {
-                  ImGui::SameLine(); ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);  ImGui::SameLine();
-                  static char buttonText[128] = { 0 };
+                  ImGui::SameLine(); ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical); ImGui::SameLine();
+                  static char buttonText[128] ={ 0 };
                   if (snprintf(buttonText, sizeof(buttonText), "Update '%s'", *ppActivePresetName)) {
                      if (ImGui::Button(buttonText)) {
                         if (updateActivePresetCallback())

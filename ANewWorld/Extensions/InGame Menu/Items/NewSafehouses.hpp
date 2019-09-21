@@ -26,7 +26,6 @@
 #pragma once
 #include "stdafx.h"
 #include "Extensions\Extensions.h"
-#include "Helpers\Game Internals\Data\GameTypes.h"
 
 namespace Extensions {
    namespace InGameMenu {
@@ -101,7 +100,7 @@ namespace Extensions {
                return TRUE;
             }
 
-#pragma region Camera hooks
+         #pragma region Camera hooks
             DWORD hkLoadCameraOnRedefineReturnAddress;
             void __declspec(naked) hkLoadCameraOnRedefine() {
                __asm {
@@ -214,8 +213,8 @@ namespace Extensions {
                   jmp[hkLoadCameraOnMenuReturnAddress]
                }
             }
-#pragma endregion
-#pragma region Safehouse hooks
+         #pragma endregion
+         #pragma region Safehouse hooks
             DWORD hkSafehouseOnEntryInnerCall;
             DWORD hkSafehouseOnEntryReturnAddress;
 
@@ -224,7 +223,7 @@ namespace Extensions {
                CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)& OnSafehouseEntry, NULL, 0, NULL);
                __asm jmp hkSafehouseOnEntryReturnAddress;
             }
-#pragma endregion
+         #pragma endregion
          }
       }
       struct NewSafehouses : _BaseInGameMenuItem {
@@ -259,7 +258,7 @@ namespace Extensions {
                      Hooks::NewSafehouses::newCarPosition.Rotation = (USHORT)0;
                      Hooks::NewSafehouses::newCarPosition.TireRotation = -15.652f;
 
-#pragma region DEBUGGING 
+                  #pragma region DEBUGGING 
                      // Z Position
                      DWORD targetAddr = Memory::makeAbsolute(0x7B5FA8);
                      Memory::openMemoryAccess(targetAddr, sizeof(float));
@@ -268,7 +267,7 @@ namespace Extensions {
                      Memory::openMemoryAccess(targetAddr, sizeof(float));
                      targetAddr = Memory::makeAbsolute(0x910CCC);
                      Memory::openMemoryAccess(targetAddr, sizeof(float));
-#pragma endregion
+                  #pragma endregion
                   }
                   // Camera
                   {
@@ -309,8 +308,7 @@ namespace Extensions {
                      Memory::writeJMP(0x253CA2, (DWORD)Hooks::NewSafehouses::hkSafehouseOnEntry, false);
                   }
                }
-            }
-            else {
+            } else {
                ImGui::Text("Code initialized, hooks are running.");
                ImGui::Separator();
                ImGui::Text("Debug options");
@@ -341,17 +339,17 @@ namespace Extensions {
                   auto* pActiveCamera = (Hooks::NewSafehouses::FreeCameraProperties*)Memory::readPointer(0x9C0BE4, false);
 
                   if (ImGui::InputFloat3("Position", pActiveCamera->Position) ||
-                     ImGui::SliderFloat2("Angles", &pActiveCamera->VerticalAngle, -360.0f, 360.0f) ||
-                     ImGui::SliderFloat("Rotation", &pActiveCamera->Rotation, -360.0f, 3360.0f) ||
-                     ImGui::SliderFloat("FOV", &pActiveCamera->FOV, 1.0f, 280.0f) ||
-                     ImGui::SliderFloat("Zoom", &pActiveCamera->Zoom, 1.0f, 180.0f)) {
+                      ImGui::SliderFloat2("Angles", &pActiveCamera->VerticalAngle, -360.0f, 360.0f) ||
+                      ImGui::SliderFloat("Rotation", &pActiveCamera->Rotation, -360.0f, 3360.0f) ||
+                      ImGui::SliderFloat("FOV", &pActiveCamera->FOV, 1.0f, 280.0f) ||
+                      ImGui::SliderFloat("Zoom", &pActiveCamera->Zoom, 1.0f, 180.0f)) {
                      Hooks::NewSafehouses::newCameraProperties = *pActiveCamera;
                   }
 
                   ImGui::Text("Boundaries");
                   if (ImGui::SliderFloat2("min/max VAngle", &pActiveCamera->MinimumVerticalAngle, -360.0f, 360.0f) ||
-                     ImGui::SliderFloat2("min/max HAngle", &pActiveCamera->MinimumHorizontalAngle, -360.0f, 360.0f) ||
-                     ImGui::SliderFloat2("min/max Zoom", &pActiveCamera->MinimumZoom, 0.0f, 180.0f)) {
+                      ImGui::SliderFloat2("min/max HAngle", &pActiveCamera->MinimumHorizontalAngle, -360.0f, 360.0f) ||
+                      ImGui::SliderFloat2("min/max Zoom", &pActiveCamera->MinimumZoom, 0.0f, 180.0f)) {
                      Hooks::NewSafehouses::newCameraProperties = *pActiveCamera;
                   }
                } ImGui::EndChild();

@@ -81,7 +81,7 @@ namespace Settings {
 
       mainFolder   = path.parent_path().u8string() + "\\ANewWorld\\";
       settingsFile = mainFolder + "ANewWorld.xml";
-      Log(LogLevel::Debug, Logger::FormatString("Settings initted successfuly. Target file: %s.", settingsFile.c_str()));
+      Log(LogLevel::Debug, Logger::FormatString("Settings initialized successfuly. Target file: \"%s.\"", settingsFile.c_str()));
       loadSettings();
    }
 }

@@ -24,15 +24,10 @@
 */
 
 #include "stdafx.h"
-//CommandLineToArgvW
-#include <shellapi.h>
+#include <shellapi.h> // CommandLineToArgvW
 // Main Features
 #include "Main/Anticheat/EditWindowProperties.hpp"
 #include "Main/Modding/Init.hpp"
-// Helpers
-#include "Helpers/Settings/Settings.h"
-#include "Helpers/WndProc/WndProcHook.h"
-#include "Helpers/LocalMirrorHook/LocalMirrorHook.hpp"
 // Extensions
 #include "Extensions/Extensions.h"
 #include "Extensions/InGame Menu/InGameMenu.h"
@@ -79,7 +74,7 @@ DWORD WINAPI Init(LPVOID) {
       std::filesystem::create_directories(Settings::mainFolder + "Logs");
       freopen((Settings::mainFolder + ss.str()).c_str(), "w+", stdout);
    }
-   Log(LogLevel::Info, std::string("Welcome to ANewWorld.\n") + Logger::FormatString("Command line: %ws", GetCommandLineW()));
+   Log(LogLevel::Info, std::string("Welcome to ANewWorld.\n\t") + Logger::FormatString("Command line: %ws", GetCommandLineW()));
 
    int32_t nArgs;
    LPWSTR* szArgList = CommandLineToArgvW(GetCommandLineW(), &nArgs);
@@ -121,6 +116,7 @@ DWORD WINAPI Init(LPVOID) {
       // InGameMenu Items
       Log(LogLevel::Debug, "Loading InGameMenu items.");
       Extensions::InGameMenu::loadItemsToInGameMenu();
+      Log(LogLevel::Info, "Initialization complete.");
    }
    static std::string copyright = "Copyright (c) Berkay Yigit - berkay(2578). Greets to GamerZ.";
    return TRUE;

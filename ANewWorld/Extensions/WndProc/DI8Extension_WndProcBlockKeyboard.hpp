@@ -25,7 +25,6 @@
 
 #pragma once
 #include "stdafx.h"
-#include "Extensions\Extensions.h"
 // Helpers
 #include "Helpers\WndProc\WndProcHook.h"
 

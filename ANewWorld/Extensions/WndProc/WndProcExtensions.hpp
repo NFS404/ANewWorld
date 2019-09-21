@@ -26,8 +26,6 @@
 #pragma once
 #include "stdafx.h"
 #include "Extensions\Extensions.h"
-// Helpers
-#include "Helpers\WndProc\WndProcHook.h"
 // Extensions
 #include "DI8Extension_WndProcBlockMouse.hpp"
 #include "DI8Extension_WndProcBlockKeyboard.hpp"

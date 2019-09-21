@@ -26,7 +26,6 @@
 #pragma once
 #include "stdafx.h"
 #include "Extensions\Extensions.h"
-#include "Helpers\Game Internals\Data\GameTypes.h"
 #include "Helpers\ServerTalk\GameServerTalk.hpp"
 #include "Helpers\ServerTalk\Object\ListOfHashes.hpp"
 

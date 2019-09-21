@@ -64,7 +64,7 @@ namespace Helpers {
          }
          Log(LogLevel::Debug, "Installing WndProc hook.");
          origWndProc = (WNDPROC)SetWindowLongPtrA(windowHandle, GWL_WNDPROC, (LONG_PTR)&hkWndProc);
-         Log(LogLevel::Debug, "Installed WndProc hook successfully.");
+         Log(LogLevel::Debug, "Hook installed successfully.");
       }
    }
 }
