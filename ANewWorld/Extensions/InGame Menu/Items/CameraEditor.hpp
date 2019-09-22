@@ -25,14 +25,13 @@
 
 #pragma once
 #include "stdafx.h"
+#include "_BaseInGameMenuItem.hpp"
 #include "Extensions\Extensions.h"
 using GameInternals::CameraInfo;
 #include <MMSystem.h> // joy*
 
-namespace Extensions
-{
-   namespace InGameMenu
-   {
+namespace Extensions {
+   namespace InGameMenu {
       class CameraEditor : public _BaseInGameMenuItem {
          struct CameraEditorData {
             CameraInfo defaultCameraInfo          ={ 0 };
@@ -126,7 +125,7 @@ namespace Extensions
                }
             }
          }
-         public:
+      public:
          const virtual void loadData() override {
             hasLoadedData = true;
          }
@@ -134,32 +133,6 @@ namespace Extensions
          const virtual void onFrame() override {
             pActiveCameraIndex = CameraInternals::getActiveCameraIndexAsPointer();
             if (pActiveCameraIndex) {
-               if (oldCameraIndex != *pActiveCameraIndex
-                   || ((oldCameraIndex == *pActiveCameraIndex) && (!pActiveCameraInfo))) {
-                  if (CameraInternals::getActiveCameraInfo(pActiveCameraInfo)) {
-                     pActiveCameraEditorData = &cache[pActiveCameraInfo];
-
-                     if (!pActiveCameraEditorData->hasLoadedSettings) {
-                        std::string activeCameraName = pActiveCameraInfo->CollectionName;
-                        auto iter = Settings::instance.cameraPresets.find(activeCameraName);
-                        if (iter != Settings::instance.cameraPresets.end()) {
-                           auto* pActiveCameraPreset = &iter->second;
-                           pActiveCameraPreset->InfoPreset.copyDataToGameInternalsCompliantPointer(pActiveCameraInfo);
-                           pActiveCameraEditorData->joyViewEnabled     = pActiveCameraPreset->JoyViewEnabled;
-                           pActiveCameraEditorData->speedFOVEnabled    = pActiveCameraPreset->SpeedFOVEnabled;
-                           pActiveCameraEditorData->speedFOVScale      = pActiveCameraPreset->SpeedFOVScale;
-                           pActiveCameraEditorData->nitrousFOVWidening = pActiveCameraPreset->NitrousFOVWidening;
-
-                           pActiveCameraEditorData->hasLoadedSettings = true;
-                        }
-                     }
-                     pActiveCameraEditorData->defaultCameraInfo = *pActiveCameraInfo;
-                     GameVariables::setVariable(GameVariables::nosFOVWidening, pActiveCameraEditorData->nitrousFOVWidening);
-                  }
-               } oldCameraIndex = *pActiveCameraIndex;
-
-               if (pActiveCameraInfo)
-                  pActiveCameraEditorData = &cache[pActiveCameraInfo];
                if (pActiveCameraInfo && pActiveCameraEditorData) {
                   /*
                   if (pActiveCameraEditorData->joyViewEnabled) {
@@ -217,6 +190,8 @@ namespace Extensions
                }
             }
          }
+         const virtual void beforeReset() override {}
+         const virtual void afterReset() override {}
 
          const virtual bool displayMenuItem(const ImVec2& buttonSize) override {
             return ImGui::Button("Camera Editor", buttonSize);
@@ -293,7 +268,7 @@ namespace Extensions
                      }
                      */
                      ImGui::TextWrapped("Distance");
-                     RockportEdControls::MultiSliderWithThreshold("##CameraDistance", &pActiveCameraInfo->Follow.MaxY, 0.0f, &pActiveCameraInfo->Follow.MinY, -100.0f, 100.0f);
+                     ImGuiEx::MultiSliderWithThreshold("##CameraDistance", &pActiveCameraInfo->Follow.MaxY, 0.0f, &pActiveCameraInfo->Follow.MinY, -100.0f, 100.0f);
                      if (pActiveCameraEditorData->showAdvancedOptions)
                         drawAdvanced("FOLLOW", &pActiveCameraInfo->Follow);
                   } else {
@@ -304,7 +279,7 @@ namespace Extensions
 
                   if (!pActiveCameraEditorData->speedFOVEnabled) {
                      ImGui::TextWrapped("FOV");
-                     RockportEdControls::MultiSliderWithThreshold("##CameraFOV", &pActiveCameraInfo->FOV.MaxY, 0.0f, &pActiveCameraInfo->FOV.MinY, 25.0f, 135.0f);
+                     ImGuiEx::MultiSliderWithThreshold("##CameraFOV", &pActiveCameraInfo->FOV.MaxY, 0.0f, &pActiveCameraInfo->FOV.MinY, 25.0f, 135.0f);
                      if (pActiveCameraEditorData->showAdvancedOptions)
                         drawAdvanced("FOV", &pActiveCameraInfo->FOV);
                   } else {
@@ -314,12 +289,12 @@ namespace Extensions
                   }
 
                   ImGui::TextWrapped("Height");
-                  RockportEdControls::MultiSliderWithThreshold("##CameraHeight", &pActiveCameraInfo->Height.MaxY, 0.0f, &pActiveCameraInfo->Height.MinY, 0.0f, 100.0f);
+                  ImGuiEx::MultiSliderWithThreshold("##CameraHeight", &pActiveCameraInfo->Height.MaxY, 0.0f, &pActiveCameraInfo->Height.MinY, 0.0f, 100.0f);
                   if (pActiveCameraEditorData->showAdvancedOptions)
                      drawAdvanced("HEIGHT", &pActiveCameraInfo->Height);
 
                   ImGui::TextWrapped("Vertical angle");
-                  RockportEdControls::MultiSliderWithThreshold("##CameraAngle", &pActiveCameraInfo->Angle[0], 0.0f, &pActiveCameraInfo->Angle[1], -89.0f, 89.0f);
+                  ImGuiEx::MultiSliderWithThreshold("##CameraAngle", &pActiveCameraInfo->Angle[0], 0.0f, &pActiveCameraInfo->Angle[1], -89.0f, 89.0f);
                   if (pActiveCameraEditorData->showAdvancedOptions) {
                      ImGui::ProperLabels::SliderFloat("ANGLE[1]", &pActiveCameraInfo->Angle[1], -89.0f, 89.0f, "%.3f deg");
                   }

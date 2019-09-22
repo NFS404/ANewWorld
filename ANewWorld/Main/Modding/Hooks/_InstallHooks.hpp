@@ -25,43 +25,41 @@
 
 #pragma once
 #include "stdafx.h"
-#include "..\Exposed\GameDataHooks.hpp"
-namespace Exposed = ANewWorld::Modding;
-#include "CreateFile.hpp"
+#include "HookCreateFile.hpp"
 
 namespace Modding {
    namespace Hooks {
-      bool WINAPI InstallFileHook(Exposed::GameDataHooks::HookType hookType, LPCSTR fileName, BYTE* newFileContent, size_t newFileContentSize) {
+      bool WINAPI InstallFileHookFromMemoryA(LPCSTR fileName, LPCVOID newFileContent, size_t newFileContentSize) {
       #pragma ExportedFunction
+         Log(LogLevel::Info, Logger::FormatString("Installing file hook for %s.", fileName));
+         Log(LogLevel::Debug, Logger::FormatString("newFileContent at %p (size: %zu)", newFileContent, newFileContentSize));
          if (LPVOID allocMem = malloc(newFileContentSize)) {
             memcpy_s(allocMem, newFileContentSize, newFileContent, newFileContentSize);
 
-            HookCreateFile::RedirectedFileEntry rfe{};
-            rfe.lenData = newFileContentSize;
-            rfe.pData   = allocMem;
-
-            HookCreateFile::addHook(std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes(fileName), std::make_shared<HookCreateFile::RedirectedFileEntry>(rfe));
+            HookCreateFile::addHook(
+               std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes(fileName),
+               std::make_shared<HookCreateFile::RedirectedFileEntry>(newFileContentSize, allocMem));
             return true;
          }
 
-         MessageBoxA(NULL, "malloc returned NULL in InstallHook->File! Report this to a developer.", "Error", MB_ICONERROR);
+         Log(LogLevel::Error, "malloc returned NULL!");
          return false;
       }
 
-      bool WINAPI InstallFileHook(Exposed::GameDataHooks::HookType hookType, LPCWSTR fileName, BYTE* newFileContent, size_t newFileContentSize) {
+      bool WINAPI InstallFileHookFromMemoryW(LPCWSTR fileName, LPCVOID newFileContent, size_t newFileContentSize) {
       #pragma ExportedFunction
+         Log(LogLevel::Info, Logger::FormatString("Installing file hook for %ws.", fileName));
+         Log(LogLevel::Debug, Logger::FormatString("newFileContent at %p (size: %zu)", newFileContent, newFileContentSize));
          if (LPVOID allocMem = malloc(newFileContentSize)) {
             memcpy_s(allocMem, newFileContentSize, newFileContent, newFileContentSize);
 
-            HookCreateFile::RedirectedFileEntry rfe{};
-            rfe.lenData = newFileContentSize;
-            rfe.pData   = allocMem;
-
-            HookCreateFile::addHook(fileName, std::make_shared<HookCreateFile::RedirectedFileEntry>(rfe));
+            HookCreateFile::addHook(
+               fileName,
+               std::make_shared<HookCreateFile::RedirectedFileEntry>(newFileContentSize, allocMem));
             return true;
          }
 
-         MessageBoxA(NULL, "malloc returned NULL in InstallHook->File! Report this to a developer.", "Error", MB_ICONERROR);
+         Log(LogLevel::Error, "malloc returned NULL!");
          return false;
       }
 

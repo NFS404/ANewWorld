@@ -150,7 +150,7 @@ namespace LocalMirrorHook {
             pD3DDevice = *(DWORD*)d3dDeviceAddress;
             Sleep(1000);
          }
-         Log(LogLevel::Debug, Logger::FormatString("Found the D3D9 device at 0x%p.", pD3DDevice));
+         Log(LogLevel::Debug, Logger::FormatString("Found the D3D9 device at %p.", pD3DDevice));
          d3dDevice = (LPDIRECT3DDEVICE9)pD3DDevice;
 
          D3DDEVICE_CREATION_PARAMETERS cParams;

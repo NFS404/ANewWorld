@@ -46,7 +46,7 @@ namespace GameInternals {
             UCrc32              mName;
 
             uint32_t Count() {
-               sizeof(mVerts) / sizeof(UMath::Vector4);
+               return NULL;
             }
             Attrib::Collection* GetMaterial() {
                return mMaterial;
@@ -110,10 +110,10 @@ namespace GameInternals {
          virtual bool CanCollideWithGround();
          virtual bool CanCollideWithObjects();
 
-#pragma region Behavior overrides
+      #pragma region Behavior overrides
          virtual void Reset() override;
-#pragma endregion
-#pragma region IRigidBody overrides
+      #pragma endregion
+      #pragma region IRigidBody overrides
          virtual ISimable*       GetOwner()                                                                override;
          virtual bool            IsSimple()                                                                override;
          virtual uint32_t        GetIndex()                                                                override;
@@ -157,7 +157,7 @@ namespace GameInternals {
          virtual void            ConvertLocalToWorld(UMath::Vector3*, bool)                                override;
          virtual void            ConvertWorldToLocal(UMath::Vector3*, bool)                                override;
          virtual void            Debug()                                                                   override;
-#pragma endregion
+      #pragma endregion
       };
    }
 } namespace GameTypes = GameInternals::Data::GameTypes;

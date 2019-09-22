@@ -171,47 +171,47 @@ namespace Extensions {
                Log(LogLevel::Info, "Creating background textures");
                {
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_3by2.png").c_str(), &backgrounds._3by2)))
-                     Log(LogLevel::Error, "Creation of 3:2 background failed with: %u", res);
+                     Log(LogLevel::Error, Logger::FormatString("Creation of 3:2 background failed with: %u", res));
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_4by3.png").c_str(), &backgrounds._4by3)))
-                     Log(LogLevel::Error, "Creation of 4:3 background failed with: %u", res);
+                     Log(LogLevel::Error, Logger::FormatString("Creation of 4:3 background failed with: %u", res));
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_5by4.png").c_str(), &backgrounds._5by4)))
-                     Log(LogLevel::Error, "Creation of 5:4 background failed with: %u", res);
+                     Log(LogLevel::Error, Logger::FormatString("Creation of 5:4 background failed with: %u", res));
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_16by9.png").c_str(), &backgrounds._16by9)))
-                     Log(LogLevel::Error, "Creation of 16:9 background failed with: %u", res);
+                     Log(LogLevel::Error, Logger::FormatString("Creation of 16:9 background failed with: %u", res));
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_16by10.png").c_str(), &backgrounds._16by10)))
-                     Log(LogLevel::Error, "Creation of 16:10 background failed with: %u", res);
+                     Log(LogLevel::Error, Logger::FormatString("Creation of 16:10 background failed with: %u", res));
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_21by9.png").c_str(), &backgrounds._21by9)))
-                     Log(LogLevel::Error, "Creation of 21:9 background failed with: %u", res);
+                     Log(LogLevel::Error, Logger::FormatString("Creation of 21:9 background failed with: %u", res));
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_32by9.png").c_str(), &backgrounds._32by9)))
-                     Log(LogLevel::Error, "Creation of 32:9 background failed with: %u", res);
+                     Log(LogLevel::Error, Logger::FormatString("Creation of 32:9 background failed with: %u", res));
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "BACKGROUND\\UI_LOADING_BACKGROUND_683by358.png").c_str(), &backgrounds._683by358)))
-                     Log(LogLevel::Error, "Creation of 683:358 background failed with: %u", res);
+                     Log(LogLevel::Error, Logger::FormatString("Creation of 683:358 background failed with: %u", res));
                }
                // Loading title backgrounds
                Log(LogLevel::Info, "Creating loading title background textures");
                {
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "DEFAULT\\TITLE\\UI_LOADING_TITLE_BACKGROUND_CIRCUIT.png").c_str(), &loadingTitleBackgrounds.circuit)))
-                     Log(LogLevel::Error, "Creation of circuit title background failed with: %u", res);
+                     Log(LogLevel::Error, Logger::FormatString("Creation of circuit title background failed with: %u", res));
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "DEFAULT\\TITLE\\UI_LOADING_TITLE_BACKGROUND_SPRINT.png").c_str(), &loadingTitleBackgrounds.sprint)))
-                     Log(LogLevel::Error, "Creation of sprint title background failed with: %u", res);
+                     Log(LogLevel::Error, Logger::FormatString("Creation of sprint title background failed with: %u", res));
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "DEFAULT\\TITLE\\UI_LOADING_TITLE_BACKGROUND_DRAG.png").c_str(), &loadingTitleBackgrounds.drag)))
-                     Log(LogLevel::Error, "Creation of drag title background failed with: %u", res);
+                     Log(LogLevel::Error, Logger::FormatString("Creation of drag title background failed with: %u", res));
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "MEET\\TITLE\\UI_LOADING_TITLE_BACKGROUND.png").c_str(), &loadingTitleBackgrounds.meet)))
-                     Log(LogLevel::Error, "Creation of meeting place title background failed with: %u", res);
+                     Log(LogLevel::Error, Logger::FormatString("Creation of meeting place title background failed with: %u", res));
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "PURSUIT\\TITLE\\UI_LOADING_TITLE_BACKGROUND_ESCAPE.png").c_str(), &loadingTitleBackgrounds.teamescape)))
-                     Log(LogLevel::Error, "Creation of team escape title background failed with: %u", res);
+                     Log(LogLevel::Error, Logger::FormatString("Creation of team escape title background failed with: %u", res));
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "PURSUIT\\TITLE\\UI_LOADING_TITLE_BACKGROUND_PURSUIT.png").c_str(), &loadingTitleBackgrounds.pursuit)))
-                     Log(LogLevel::Error, "Creation of pursuit title background failed with: %u", res);
+                     Log(LogLevel::Error, Logger::FormatString("Creation of pursuit title background failed with: %u", res));
                }
                // Loading circles
                Log(LogLevel::Info, "Creating loading circle textures");
                {
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "DEFAULT\\UI_LOADING_CIRCLE.png").c_str(), &loadingCircles.default)))
-                     Log(LogLevel::Error, "Creation of default loading circle failed with: %u", res);
+                     Log(LogLevel::Error, Logger::FormatString("Creation of default loading circle failed with: %u", res));
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "MEET\\UI_LOADING_CIRCLE.png").c_str(), &loadingCircles.meet)))
-                     Log(LogLevel::Error, "Creation of meeting place loading circle failed with: %u", res);
+                     Log(LogLevel::Error, Logger::FormatString("Creation of meeting place loading circle failed with: %u", res));
                   if (FAILED(res = D3DXCreateTextureFromFileA(pDevice, (dirUIAssets + "PURSUIT\\UI_LOADING_CIRCLE.png").c_str(), &loadingCircles.pursuit)))
-                     Log(LogLevel::Error, "Creation of pursuit loading circle failed with: %u", res);
+                     Log(LogLevel::Error, Logger::FormatString("Creation of pursuit loading circle failed with: %u", res));
                }
                hasLoadedTextures = true;
             }

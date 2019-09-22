@@ -28,10 +28,11 @@
 #define _WIN32_WINNT 0x600
 #include <SDKDDKVer.h>
 // Win32
+#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
 #define _CRT_SECURE_NO_WARNINGS
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
-#include <windows.h>
+#include <Windows.h>
 // MSVC
 #pragma warning(disable : 6031) // return vale is ignored
 // Commonly used headers

@@ -97,6 +97,9 @@
     <Filter Include="Helpers\Logger">
       <UniqueIdentifier>{07ecd832-b898-471b-b3c3-a3a8c225c546}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Main\Modding\Exposed\Hooks">
+      <UniqueIdentifier>{3d5bc525-2c1c-4c21-b52c-86bd85f126b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Extensions\Extensions.h">
@@ -357,9 +360,6 @@
     <ClInclude Include="Main\Modding\Server\Types\DataType.hpp">
       <Filter>Main\Modding\Server\Types</Filter>
     </ClInclude>
-    <ClInclude Include="Main\Modding\Exposed\GameDataHooks.hpp">
-      <Filter>Main\Modding\Exposed</Filter>
-    </ClInclude>
     <ClInclude Include="Helpers\ServerTalk\GameServerTalk.hpp">
       <Filter>Helpers\ServerTalk</Filter>
     </ClInclude>
@@ -377,9 +377,6 @@
     </ClInclude>
     <ClInclude Include="LICENSE">
       <Filter>default</Filter>
-    </ClInclude>
-    <ClInclude Include="Main\Modding\Hooks\CreateFile.hpp">
-      <Filter>Main\Modding\Hooks</Filter>
     </ClInclude>
     <ClInclude Include="Helpers\LocalMirrorHook\D3D9\D3D9Types.h">
       <Filter>Helpers\LocalMirrorHook\D3D9</Filter>
@@ -404,6 +401,15 @@
     </ClInclude>
     <ClInclude Include="Helpers\Logger\Logger.hpp">
       <Filter>Helpers\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\Modding\Exposed\ANewWorld.hpp">
+      <Filter>Main\Modding\Exposed</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\Modding\Exposed\Hooks\GameDataHooks.hpp">
+      <Filter>Main\Modding\Exposed\Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\Modding\Hooks\HookCreateFile.hpp">
+      <Filter>Main\Modding\Hooks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

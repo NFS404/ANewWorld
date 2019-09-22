@@ -25,6 +25,7 @@
 
 #pragma once
 #include "stdafx.h"
+#define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
 
 typedef HRESULT(WINAPI* GetDeviceState_t)(HINSTANCE, DWORD, LPVOID);

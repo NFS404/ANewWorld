@@ -111,6 +111,8 @@
     <GenerateManifest>false</GenerateManifest>
     <TargetExt>.WorldMod</TargetExt>
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_RL|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -171,10 +173,12 @@
       <CallingConvention>Cdecl</CallingConvention>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/analyze:stacksize1000000 %(AdditionalOptions)</AdditionalOptions>
       <ConformanceMode>false</ConformanceMode>
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <ExceptionHandling>Sync</ExceptionHandling>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -364,8 +368,9 @@
     <ClInclude Include="Helpers\WndProc\WndProcHook.h" />
     <ClInclude Include="LICENSE" />
     <ClInclude Include="Main\Anticheat\EditWindowProperties.hpp" />
-    <ClInclude Include="Main\Modding\Exposed\GameDataHooks.hpp" />
-    <ClInclude Include="Main\Modding\Hooks\CreateFile.hpp" />
+    <ClInclude Include="Main\Modding\Exposed\ANewWorld.hpp" />
+    <ClInclude Include="Main\Modding\Exposed\Hooks\GameDataHooks.hpp" />
+    <ClInclude Include="Main\Modding\Hooks\HookCreateFile.hpp" />
     <ClCompile Include="Helpers\imgui\imgui_freetype.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -426,4 +431,8 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
+  <PropertyGroup Condition="'$(Language)'=='C++'">
+    <IncludePath>$(DXSDK_DIR)Include;$(SolutionDir)inc;$(IncludePath)</IncludePath>
+    <CAExcludePath>$(DXSDK_DIR)Include;$(SolutionDir)inc;$(CAExcludePath)</CAExcludePath>
+  </PropertyGroup>
 </Project>
