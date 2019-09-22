@@ -35,8 +35,6 @@
 #include <stdexcept> // runtime_error
 #include <exception> // throw_with_nested
 
-#include "Hooks\GameDataHooks.hpp"
-
 namespace ANewWorld {
    /// <summary>
    /// Used internally.
