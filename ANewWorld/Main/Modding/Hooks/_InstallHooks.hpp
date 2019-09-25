@@ -29,41 +29,8 @@
 
 namespace Modding {
    namespace Hooks {
-      bool WINAPI InstallFileHookFromMemoryA(LPCSTR fileName, LPCVOID newFileContent, size_t newFileContentSize) {
-      #pragma ExportedFunction
-         Log(LogLevel::Info, Logger::FormatString("Installing file hook for %s.", fileName));
-         Log(LogLevel::Debug, Logger::FormatString("newFileContent at %p (size: %zu)", newFileContent, newFileContentSize));
-         if (LPVOID allocMem = malloc(newFileContentSize)) {
-            memcpy_s(allocMem, newFileContentSize, newFileContent, newFileContentSize);
-
-            HookCreateFile::addHook(
-               std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes(fileName),
-               std::make_shared<HookCreateFile::RedirectedFileEntry>(newFileContentSize, allocMem));
-            return true;
-         }
-
-         Log(LogLevel::Error, "malloc returned NULL!");
-         return false;
-      }
-
-      bool WINAPI InstallFileHookFromMemoryW(LPCWSTR fileName, LPCVOID newFileContent, size_t newFileContentSize) {
-      #pragma ExportedFunction
-         Log(LogLevel::Info, Logger::FormatString("Installing file hook for %ws.", fileName));
-         Log(LogLevel::Debug, Logger::FormatString("newFileContent at %p (size: %zu)", newFileContent, newFileContentSize));
-         if (LPVOID allocMem = malloc(newFileContentSize)) {
-            memcpy_s(allocMem, newFileContentSize, newFileContent, newFileContentSize);
-
-            HookCreateFile::addHook(
-               fileName,
-               std::make_shared<HookCreateFile::RedirectedFileEntry>(newFileContentSize, allocMem));
-            return true;
-         }
-
-         Log(LogLevel::Error, "malloc returned NULL!");
-         return false;
-      }
-
       void installHooks() {
+         Log(LogLevel::Info, "Installing ::Modding hooks.");
          HookCreateFile::installHook();
       }
    }

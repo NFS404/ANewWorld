@@ -69,7 +69,7 @@ namespace Modding::Hooks::HookCreateFile {
          HANDLE hReadPipe, hWritePipe;
          CreatePipe(&hReadPipe, &hWritePipe, nullptr, lenData);
          if (!hReadPipe) {
-            Log(LogLevel::Error, "RedirectedFileEntry->getPipe(): Failed to create pipe!");
+            Log(LogLevel::Error, "Failed to create pipe!");
             return nullptr;
          }
 
@@ -114,14 +114,47 @@ namespace Modding::Hooks::HookCreateFile {
       return CreateFileW(lpFileName, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
    }
 
-   void installHook() {
-      Log(LogLevel::Info, "Installing hooks.");
-      // redirect CreateFileW
-      {
-         DWORD addCreateFileW = Memory::makeAbsolute(0x71D0FC);
-         Memory::openMemoryAccess(addCreateFileW, 4);
-         *(DWORD*)addCreateFileW = (DWORD)&hkCreateFileW;
-         Memory::restoreMemoryAccess();
+#pragma region Exported helpers
+   bool WINAPI InstallFileHookFromMemoryA(LPCSTR fileName, LPCVOID newFileContent, size_t newFileContentSize) {
+   #pragma ExportedFunction
+      Log(LogLevel::Info, Logger::FormatString("Installing file hook for %s.", fileName));
+      Log(LogLevel::Debug, Logger::FormatString("newFileContent at %p (size: %zu)", newFileContent, newFileContentSize));
+      if (LPVOID allocMem = malloc(newFileContentSize)) {
+         memcpy_s(allocMem, newFileContentSize, newFileContent, newFileContentSize);
+
+         HookCreateFile::addHook(
+            std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes(fileName),
+            std::make_shared<HookCreateFile::RedirectedFileEntry>(newFileContentSize, allocMem));
+         return true;
       }
+
+      Log(LogLevel::Error, "malloc returned NULL!");
+      return false;
+   }
+
+   bool WINAPI InstallFileHookFromMemoryW(LPCWSTR fileName, LPCVOID newFileContent, size_t newFileContentSize) {
+   #pragma ExportedFunction
+      Log(LogLevel::Info, Logger::FormatString("Installing file hook for %ws.", fileName));
+      Log(LogLevel::Debug, Logger::FormatString("newFileContent at %p (size: %zu)", newFileContent, newFileContentSize));
+      if (LPVOID allocMem = malloc(newFileContentSize)) {
+         memcpy_s(allocMem, newFileContentSize, newFileContent, newFileContentSize);
+
+         HookCreateFile::addHook(
+            fileName,
+            std::make_shared<HookCreateFile::RedirectedFileEntry>(newFileContentSize, allocMem));
+         return true;
+      }
+
+      Log(LogLevel::Error, "malloc returned NULL!");
+      return false;
+   }
+#pragma endregion
+
+   void installHook() {
+      Log(LogLevel::Info, "Hooking CreateFileW.");
+      DWORD addCreateFileW = Memory::makeAbsolute(0x71D0FC);
+      Memory::openMemoryAccess(addCreateFileW, 4);
+      *(DWORD*)addCreateFileW = (DWORD)&hkCreateFileW;
+      Memory::restoreMemoryAccess();
    }
 }

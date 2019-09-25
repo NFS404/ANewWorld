@@ -24,7 +24,9 @@
 */
 
 #pragma once
+#ifndef __ANEWWORLD_INCLUDED__
 #include "..\ANewWorld.hpp"
+#endif
 
 namespace ANewWorld::Modding {
    namespace GameDataHooks {
@@ -41,7 +43,7 @@ namespace ANewWorld::Modding {
       ANEWWORLD_API bool InstallFileHookFromMemoryA(LPCSTR fileName, LPCVOID newFileContent, size_t newFileContentSize) {
          try {
             if (HMODULE hANW = GetANewWorldHandle()) {
-               if (FARPROC pFn = GetANewWorldFunction(hANW, "Modding::Hooks::InstallFileHookFromMemoryA")) {
+               if (FARPROC pFn = GetANewWorldFunction(hANW, "Modding::Hooks::HookCreateFile::InstallFileHookFromMemoryA")) {
                   return reinterpret_cast<fnInstallFileHookFromMemoryA>(pFn)(fileName, newFileContent, newFileContentSize);
                }
             }
@@ -60,7 +62,7 @@ namespace ANewWorld::Modding {
       ANEWWORLD_API bool InstallFileHookFromMemoryW(LPCWSTR fileName, LPCVOID newFileContent, size_t newFileContentSize) {
          try {
             if (HMODULE hANW = GetANewWorldHandle()) {
-               if (FARPROC pFn = GetANewWorldFunction(hANW, "Modding::Hooks::InstallFileHookFromMemoryW")) {
+               if (FARPROC pFn = GetANewWorldFunction(hANW, "Modding::Hooks::HookCreateFile::InstallFileHookFromMemoryW")) {
                   return reinterpret_cast<fnInstallFileHookFromMemoryW>(pFn)(fileName, newFileContent, newFileContentSize);
                }
             }

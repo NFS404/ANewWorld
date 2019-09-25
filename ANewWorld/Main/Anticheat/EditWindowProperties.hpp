@@ -59,22 +59,25 @@ namespace AntiCheat::EditWindowProperties {
    }
 
    void WINAPI editWindowProperties() {
-      // takeover the class name
-      auto cstr = TemporaryHelper::generateRandomString(9);
-      auto wstr = std::wstring(cstr.begin(), cstr.end());
-      TemporaryHelper::memOverrideStringA(Memory::makeAbsolute(0x7B58CC), cstr.c_str());
-      TemporaryHelper::memOverrideStringW(Memory::makeAbsolute(0x7B58A4), wstr.c_str());
+      Log(LogLevel::Info, "Applying anti-cheat measures.");
+      {
+         Log(LogLevel::Debug, "Replacing class name with a random string");
+         auto cstr = TemporaryHelper::generateRandomString(9);
+         auto wstr = std::wstring(cstr.begin(), cstr.end());
+         TemporaryHelper::memOverrideStringA(Memory::makeAbsolute(0x7B58CC), cstr.c_str());
+         TemporaryHelper::memOverrideStringW(Memory::makeAbsolute(0x7B58A4), wstr.c_str());
+      }
+      {
+         Log(LogLevel::Debug, "Appending ANewWorld string to window name.");
+         wchar_t** pWWindowName = (wchar_t**)Memory::makeAbsolute(0x884E24);
+         wchar_t* wExtraStr = new wchar_t[18]{ L" - ANewWorld v1.0" };
+         wchar_t* wFinalName = new wchar_t[wcslen(*pWWindowName) + wcslen(wExtraStr)];
+         wcscpy(wFinalName, *pWWindowName); wcscat(wFinalName, wExtraStr);
+         delete[] wExtraStr;
 
-      // add to window name
-      wchar_t** pWWindowName = (wchar_t**)Memory::makeAbsolute(0x884E24);
-      wchar_t* wExtraStr = new wchar_t[18]{ L" - ANewWorld v1.0" };
-      wchar_t* wFinalName = new wchar_t[wcslen(*pWWindowName) + wcslen(wExtraStr)];
-      wcscpy(wFinalName, *pWWindowName); wcscat(wFinalName, wExtraStr);
-      delete[] wExtraStr;
-
-      // replace original offset
-      Memory::openMemoryAccess((DWORD)pWWindowName, sizeof(DWORD));
-      *pWWindowName = wFinalName;
-      Memory::restoreMemoryAccess();
+         Memory::openMemoryAccess((DWORD)pWWindowName, sizeof(DWORD));
+         *pWWindowName = wFinalName;
+         Memory::restoreMemoryAccess();
+      }
    }
 }
