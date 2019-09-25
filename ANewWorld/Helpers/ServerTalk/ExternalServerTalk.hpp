@@ -118,15 +118,15 @@ public:
          "application/xml"
       );
 
-      if (!res) {
-         if (fail)
-            fail(res->status);
-      } else {
+      if (res) {
          if (res->status >= 200 && res->status <= 399) {
             if (success)
                success(res->status, res->body.c_str());
-            return TRUE;
+         } else {
+            if (fail)
+               fail(res->status);
          }
+         return TRUE;
       }
       return FALSE;
    }
@@ -141,15 +141,15 @@ public:
          }
       );
 
-      if (!res) {
-         if (fail)
-            fail(res->status);
-      } else {
+      if (res) {
          if (res->status >= 200 && res->status <= 399) {
             if (success)
                success(res->status, res->body.c_str());
-            return TRUE;
+         } else {
+            if (fail)
+               fail(res->status);
          }
+         return TRUE;
       }
       return FALSE;
    }
@@ -166,15 +166,15 @@ public:
          "application/xml"
       );
 
-      if (!res) {
-         if (fail)
-            fail(res->status);
-      } else {
+      if (res) {
          if (res->status >= 200 && res->status <= 399) {
             if (success)
                success(res->status, res->body.c_str());
-            return TRUE;
+         } else {
+            if (fail)
+               fail(res->status);
          }
+         return TRUE;
       }
       return FALSE;
    }
@@ -191,15 +191,15 @@ public:
          "application/xml"
       );
 
-      if (!res) {
-         if (fail)
-            fail(res->status);
-      } else {
+      if (res) {
          if (res->status >= 200 && res->status <= 399) {
             if (success)
                success(res->status, res->body.c_str());
-            return TRUE;
+         } else {
+            if (fail)
+               fail(res->status);
          }
+         return TRUE;
       }
       return FALSE;
    }
@@ -216,15 +216,15 @@ public:
          "application/xml"
       );
 
-      if (!res) {
-         if (fail)
-            fail(res->status);
-      } else {
+      if (res) {
          if (res->status >= 200 && res->status <= 399) {
             if (success)
                success(res->status, res->body.c_str());
-            return TRUE;
+         } else {
+            if (fail)
+               fail(res->status);
          }
+         return TRUE;
       }
       return FALSE;
    }
@@ -241,15 +241,15 @@ public:
          "application/xml"
       );
 
-      if (!res) {
-         if (fail)
-            fail(res->status);
-      } else {
+      if (res) {
          if (res->status >= 200 && res->status <= 399) {
             if (success)
                success(res->status, res->body.c_str());
-            return TRUE;
+         } else {
+            if (fail)
+               fail(res->status);
          }
+         return TRUE;
       }
       return FALSE;
    }
